@@ -2,10 +2,10 @@ package frc.robot;
 
 import frc.robot.components.*;
 
-import edu.wpi.first.wpilibj.SampleRobot;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 
-public class Robot extends SampleRobot {
+public class Robot extends TimedRobot {
   public static DriveTrain driveTrain = new DriveTrain();
   public static Elevator elevator = new Elevator();
   public static Claw claw = new Claw();
@@ -15,12 +15,14 @@ public class Robot extends SampleRobot {
 
   @Override
   public void robotInit() {
-    System.out.println("Robot Code Initializing");
+    System.out.println("****** Robot Code Initializing ******");
   }
 
+  // Autonomous code...
+
   @Override
-  public void autonomous() {
-    System.out.println("Robot Autonomous Code Executing");
+  public void autonomousInit() {
+    System.out.println("****** Robot Autonomous Code Initializing ******");
 
     driveTrain.ToggleSafty(false);
     driveTrain.Drive(0.0, 1.0);
@@ -29,14 +31,18 @@ public class Robot extends SampleRobot {
 
     driveTrain.Stop();
     driveTrain.ToggleSafty(true);
-
-    while(isAutonomous() && isEnabled()) {
-    }
   }
 
   @Override
-  public void operatorControl() {
-    System.out.println("Robot Operator Code Executing");
+  public void autonomousPeriodic() {
+    System.out.println("****** Robot Autonomous Code Looping ******");
+  }
+
+  // Teleop Code...
+
+  @Override
+  public void teleopInit() {
+    System.out.println("****** Robot Teleop Code Initializing ******");
     while (isOperatorControl() && isEnabled()) {
       controller.Update();
 
@@ -45,16 +51,31 @@ public class Robot extends SampleRobot {
   }
 
   @Override
-  public void disabled() {
-    System.out.println("Robot Disabled");
-    while (isDisabled() && isEnabled()) {
-    }
+  public void teleopPeriodic() {
+    System.out.println("****** Robot Teleop Code Looping ******");
+  }
+
+  // Disabled code...
+
+  @Override
+  public void disabledInit() {
+    System.out.println("****** Robot Disabled Code Initializing ******");
   }
 
   @Override
-  public void test() {
-    System.out.println("Robot Test Code Executing");
-    while (isTest() && isEnabled()) {
-    }
+  public void disabledPeriodic() {
+    System.out.println("****** Robot Disabled Code Looping ******");
+  }
+
+  // Test code...
+
+  @Override
+  public void testInit() {
+    System.out.println("****** Robot Test Code Initializing ******");
+  }
+
+  @Override
+  public void testPeriodic() {
+    System.out.println("****** Robot Test Code Looping ******");
   }
 }
