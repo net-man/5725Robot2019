@@ -11,7 +11,7 @@ public class Claw {
     }
 
     public void ToggleSafty(boolean isSafe) {
-            motor1.setSafetyEnabled(isSafe);
+        motor1.setSafetyEnabled(isSafe);
     }
 
     public void Stop() {

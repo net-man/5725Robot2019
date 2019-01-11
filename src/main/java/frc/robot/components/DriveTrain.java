@@ -21,10 +21,10 @@ public class DriveTrain {
     }
 
     public void ToggleSafty(boolean isSafe) {
-            motorRight1.setSafetyEnabled(isSafe);
-            motorRight1.setSafetyEnabled(isSafe);
-            motorLeft1.setSafetyEnabled(isSafe);
-            motorLeft2.setSafetyEnabled(isSafe);
+        motorRight1.setSafetyEnabled(isSafe);
+        motorRight1.setSafetyEnabled(isSafe);
+        motorLeft1.setSafetyEnabled(isSafe);
+        motorLeft2.setSafetyEnabled(isSafe);
     }
 
     public void Stop() {

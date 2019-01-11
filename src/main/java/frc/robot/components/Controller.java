@@ -10,8 +10,8 @@ public class Controller {
     public double y = 0.0;
 
     public void Update() {
-        x = (joystick.getX()-0.5)*2;
-        y = (joystick.getY()-0.5)*2;
+        x = (joystick.getX() - 0.5) * 2;
+        y = (joystick.getY() - 0.5) * 2;
 
         // TODO: Add ramping sensitivity.
     }
