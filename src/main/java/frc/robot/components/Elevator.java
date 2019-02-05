@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.*;
 import frc.robot.RobotMap;
 
 public class Elevator {
-    public Spark motor1 = new Spark(RobotMap.ELEVATOR_MOTOR_LIFT_1.port);
+    public Spark motor1 = new Spark(RobotMap.ELEVATOR_MOTOR_LIFT_1);
 
     public void Lift(double amount) {
         motor1.set(amount);
