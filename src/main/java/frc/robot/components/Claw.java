@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.*;
 import frc.robot.RobotMap;
 
 public class Claw {
-    public Spark motor1 = new Spark(RobotMap.CLAW_ROTATION_MOTOR_1.port);
+    public Spark motor1 = new Spark(RobotMap.CLAW_ROTATION_MOTOR_1);
 
     public void Rotate(double amount) {
         motor1.set(amount);

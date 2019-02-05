@@ -5,15 +5,16 @@ import java.util.List;
 import frc.utils.Vector2Int;
 
 public class Pathfinding {
-    private List<Vector2Int> openSet;
-    private List<Vector2Int> closedSet;
 
-    private Grid grid;
+    private Vector2Int[] openSet;
+    private Vector2Int[] closedSet;
+
+    // private Grid grid;
 
     public Vector2Int[] path;
 
     public Pathfinding(Grid grid) {
-        this.grid = grid;
+        // this.grid = grid;
     }
 
     public void Solve(Vector2Int start, Vector2Int goal) {

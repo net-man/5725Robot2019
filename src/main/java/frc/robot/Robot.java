@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Robot extends TimedRobot {
 	public static DriveTrain driveTrain = new DriveTrain();
-	public static Elevator elevator = new Elevator();
-	public static Claw claw = new Claw();
+	// public static Elevator elevator = new Elevator();
+	// public static Claw claw = new Claw();
 	public static Controller controller = new Controller();
 
 	public Robot() {
@@ -48,10 +48,13 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		System.out.println("****** Robot Teleop Code Looping ******");
+		// System.out.println("****** Robot Teleop Code Looping ******");
 
 		controller.Update();
-		driveTrain.Drive(controller.x, controller.y);
+		driveTrain.Drive(controller.x * 0.3, controller.y * 0.3);
+		// driveTrain.DriveTank(controller.x * 0.3, controller.x * 0.3);
+		// driveTrain.DriveTank(controller.y * 0.3, 0);
+		System.out.println("Controller X: " + controller.x + "Y: " + controller.y);
 	}
 
 	// Disabled code...
