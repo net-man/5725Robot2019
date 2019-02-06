@@ -1,9 +1,9 @@
 package frc.robot.coordinates;
 
-import utils.Vector2Int;
+import frc.utils.Vector2Int;
 
 public class Grid {
-    public double[][] nodes;
+    public Node[][] nodes;
 
     public enum Positions {
         // Robot Start //
@@ -42,12 +42,8 @@ public class Grid {
         }
     }
 
-    public Vector2Int robotStartPosition;
-    public Vector2Int goalTestPosition;
-
-
     public Grid(int sizeX, int sizeY) {
-        nodes = new double[sizeX][sizeY];
+        nodes = new Node[sizeX][sizeY];
     }
 
     public Vector2Int[] GetNeighbours(int x, int y) {

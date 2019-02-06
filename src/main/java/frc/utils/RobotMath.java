@@ -1,4 +1,4 @@
-package utils;
+package frc.utils;
 
 public class RobotMath {
     public static Vector2 PolarToCartesian(double speed, double angle) {

@@ -1,4 +1,4 @@
-package utils;
+package frc.utils;
 
 public class Vector2 {
     public double x;
