@@ -11,26 +11,30 @@ public class DriveTrain {
     private Spark motorLeft1 = new Spark(RobotMap.DRIVE_TRAIN_MOTOR_LEFT_1);
     private Spark motorLeft2 = new Spark(RobotMap.DRIVE_TRAIN_MOTOR_LEFT_2);
 
-    private Encoder encoderRight = new Encoder(0, 1);
-    private Encoder encoderLeft = new Encoder(0, 1);
+    // private Encoder encoderRight = new Encoder(0, 1);
+    // private Encoder encoderLeft = new Encoder(3, 4);
+    private Encoder encoderRight;
+    private Encoder encoderLeft;
+
+    public double driveSpeed = 0.4;
+    public double turnSpeed = 0.2;
 
     private double speed;
-    private double angle;
+    private double rotation;
 
     private Vector2 position;
 
     private double wheelCMCircumference = 0.0;
 
-    public DriveTrain() { }
+    public DriveTrain() {
+    }
 
     // Set the distance of the robot from it's current position.
     public void SetDistance(double cm) {
-
     }
 
     // Set the angle or rotation of the robot.
     public void SetRotation(double angle) {
-
     }
 
     // Robot rotates and drives towards a given x and y.
@@ -48,21 +52,26 @@ public class DriveTrain {
         double right = encoderRight.getRate() * wheelCMCircumference;
         double left = encoderLeft.getRate() * wheelCMCircumference;
 
-        double h = Math.sqrt(right*right + left*left);
+        // FIXME: hypotenuse is wrong.
+        // It should be heighest value ^ 2 + robot width ^ 2.
+        // If one value is negative, add that to the magnitude of the side.
+        double hypotenuse = Math.sqrt(right * right + left * left);
 
-        if(left > right) speed = left;
-        else speed = right;
+        speed = Math.abs(right - left);
+        rotation = Math.sin(speed / hypotenuse);
 
-        angle = Math.asin(speed/h);
-
-        position.Add(RobotMath.PolarToCartesian(speed, angle));
+        position.Add(RobotMath.PolarToCartesian(speed, rotation));
     }
 
     public void Drive(double rotation, double speed) {
-        DriveTank(speed + rotation, -speed + rotation);
+        rotation *= turnSpeed;
+        DriveTank(speed - rotation, -speed + rotation);
+        System.out.println("Speed = " + speed + " | Rotation = " + rotation);
     }
 
     public void DriveTank(double right, double left) {
+        right *= driveSpeed;
+        left *= driveSpeed;
         motorRight1.set(right);
         motorRight2.set(right);
         motorLeft1.set(left);

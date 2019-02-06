@@ -1,7 +1,7 @@
 package frc.robot;
 
 import frc.robot.components.*;
-
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -10,6 +10,8 @@ public class Robot extends TimedRobot {
 	// public static Elevator elevator = new Elevator();
 	// public static Claw claw = new Claw();
 	public static Controller controller = new Controller();
+
+	public static Encoder encoderTest = new Encoder(0, 0);
 
 	public Robot() {
 	}
@@ -36,7 +38,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousPeriodic() {
-		System.out.println("****** Robot Autonomous Code Looping ******");
 	}
 
 	// Teleop Code...
@@ -48,14 +49,28 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		// System.out.println("****** Robot Teleop Code Looping ******");
-
+		// TODO: Review.
+		// Update the controller with new values. This was chosen for performance
+		// over individual method calls. (i.e. GetX(), GetY()).
+		// Consider re-thinking this as it in a great performace hit at all
+		// and can't be overlooked by accident.
 		controller.Update();
-		driveTrain.Drive(controller.x * 0.3, controller.y * 0.3);
-		// driveTrain.DriveTank(controller.x * 0.3, controller.x * 0.3);
-		// driveTrain.DriveTank(controller.y * 0.3, 0);
-		System.out.println("Controller X: " + controller.x + "Y: " + controller.y);
+		// Drive the robot by the x and y joystick position.
+		// Speed is controlled by the DriveTrain.
+		driveTrain.Drive(controller.x, controller.y);
+		
+		// TODO: Consider making a custom console logger.
+
+		// This is just a hacky solution for console spam. This will only print
+		// Every 10000 ticks.
+		if(tick % 10000 == 0) {
+			System.out.println("Controller X: " + controller.x + "Y: " + controller.y);
+		}
+		tick++;
 	}
+
+	// Delete me once printing control x and y is no longer needed.
+	int tick = 0;
 
 	// Disabled code...
 
@@ -78,6 +93,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
-		System.out.println("****** Robot Test Code Looping ******");
+		System.out.println("Encoder Count = " + encoderTest.get());
 	}
 }
