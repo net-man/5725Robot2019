@@ -9,14 +9,33 @@ public class Controller {
     public double x = 0.0;
     public double y = 0.0;
 
-    public void Update() {
-        // x = (joystick.getX() - 0.5) * 2;
-        // y = (joystick.getY() - 0.5) * 2;
+    public double[] snapValues = new double[] { 0.0, 0.3, 1.0 };
 
-        // x = (joystick.getRawAxis(0)+1)/2;
-        // y = (joystick.getRawAxis(1)+1)/2;
+    public double GetX() {
+        return joystick.getRawAxis(0);
+    }
 
-        x = joystick.getRawAxis(0);
-        y = joystick.getRawAxis(1);
+    public double GetY() {
+        return joystick.getRawAxis(1);
+    }
+
+    public double GetSnappedX() {
+        double x = joystick.getRawAxis(0);
+
+        for(int i = 0; i <= snapValues.length-2; i++) {
+            if(x > snapValues[i]) x = snapValues[i+1];
+        }
+
+        return x;
+    }
+
+    public double GetSnappedY() {
+        double y = joystick.getRawAxis(1);
+
+        for(int i = 0; i <= snapValues.length-2; i++) {
+            if(y > snapValues[i]) y = snapValues[i+1];
+        }
+
+        return y;
     }
 }

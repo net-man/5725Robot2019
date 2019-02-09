@@ -1,11 +1,13 @@
 package frc.robot.coordinates;
 
+import frc.utils.Vector2;
 import frc.utils.Vector2Int;
 
 public class Grid {
     public Node[][] nodes;
 
     public enum Positions {
+        // FIXME: Consider making these variables into a dictionary that cab be dynamically loaded.
         // Robot Start //
         ROBOT_START_1(0, 0, 0.0),
         ROBOT_START_2(0, 0, 0.0),
@@ -59,5 +61,15 @@ public class Grid {
         if(y - 1 < nodes[x].length-1) neighbours[NeighbourIndex.RIGHT.index] = new Vector2Int(x, y - 1);
 
         return neighbours;
+    }
+
+    public Vector2 WorldToGridCoords(double x, double y) {
+        // TODO: Implement.
+        return new Vector2();
+    }
+
+    public Vector2 GridToWorldCoords(int x, int y) {
+        // TODO: Implement.
+        return new Vector2();
     }
 }

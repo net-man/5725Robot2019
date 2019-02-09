@@ -50,10 +50,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		// System.out.println("****** Robot Teleop Code Looping ******");
 
-		controller.Update();
-		driveTrain.Drive(controller.x * 0.3, controller.y * 0.3);
-		// driveTrain.DriveTank(controller.x * 0.3, controller.x * 0.3);
-		// driveTrain.DriveTank(controller.y * 0.3, 0);
+		driveTrain.Drive(controller.GetX(), controller.GetY());
 		System.out.println("Controller X: " + controller.x + "Y: " + controller.y);
 	}
 

@@ -1,11 +1,17 @@
 package frc.robot.components;
 
-import utils.*;
+import frc.utils.*;
 
 import edu.wpi.first.wpilibj.*;
 import frc.robot.RobotMap;
 
 public class DriveTrain {
+    // Some things to note.
+    // 'Drive' will add onto the thing.
+    // 'DriveTo' will set the thing to a specific value.
+    // For example 'DriveDistance(x)' will drive forwards by x amount.
+    // 'DriveToDistance(x)' will drive to x as distance of the robot's polar coordinates.
+
     private Spark motorRight1 = new Spark(RobotMap.DRIVE_TRAIN_MOTOR_RIGHT_1);
     private Spark motorRight2 = new Spark(RobotMap.DRIVE_TRAIN_MOTOR_RIGHT_2);
     private Spark motorLeft1 = new Spark(RobotMap.DRIVE_TRAIN_MOTOR_LEFT_1);
@@ -14,55 +20,93 @@ public class DriveTrain {
     private Encoder encoderRight = new Encoder(0, 1);
     private Encoder encoderLeft = new Encoder(0, 1);
 
-    private double speed;
+    private double distance;
     private double angle;
 
-    private Vector2 position;
-
-    private double wheelCMCircumference = 0.0;
+    public double driveSpeed;
+    public double turnSpeed;
 
     public DriveTrain() { }
 
-    // Set the distance of the robot from it's current position.
-    public void SetDistance(double cm) {
+    public double GetWorldX() {
+        // TODO: Test and debug.
+        return Math.sin(angle) * distance;
+    }
+    public double GetWorldY() {
+        // TODO: Test and debug.
+        return Math.cos(angle) * distance;
+    }
 
+    // Set the distance of the robot from it's current position.
+    public void DriveDistance(double cm, double speed) {
+        // TODO: Test and debug.
+        double d = distance + cm;
+        while(Math.sqrt(distance*distance + d*d) > 1) {
+            DriveTank(speed, speed);
+        }
     }
 
     // Set the angle or rotation of the robot.
-    public void SetRotation(double angle) {
+    public void DriveDegrees(double degrees, double speed) {
+        double a = angle + degrees;
+        // TODO: Test and debug.
+        // FIXME: I don't think this if statement works.
+        // What is should do is decide which way the bot is spinning based on what angle is desired.
+        if(degrees < 0) speed *= -1;
+        while(Math.sqrt(angle*angle + a*a) > 1) {
+            DriveTank(speed, -speed);
+        }
+    }
 
+    public void DriveToAngle(double angle) {
+        // TODO: Implement.
+    }
+
+    public void DriveToDistance(double distance) {
+        // TODO: Implement.
     }
 
     // Robot rotates and drives towards a given x and y.
     public void DriveToPoint(double x, double y) {
+        // TODO: Test and debug.
+        double d = Math.sqrt(x*x + y*y);
+        double a = Math.atan(y / x);
 
+        // FIXME: Bad implementation.
+        new Thread(() -> { DriveToAngle(a); });
+        // FIXME: Bad implementation.
+        new Thread(() -> { DriveToDistance(d); });
     }
 
     // Robot smoothly navigates a path.
-    public void DrivePointPath(Vector2[] points) {
-
+    public void DriveToPointPath(Vector2[] points) {
+        // TODO: Test and debug.
     }
 
     public void CalculateWorldPosition() {
-        // TODO: Tripple check my math. It probalby isn't that good.
-        double right = encoderRight.getRate() * wheelCMCircumference;
-        double left = encoderLeft.getRate() * wheelCMCircumference;
+        // TODO: Test and debug.
+        // double right = encoderRight.getRate() * wheelCMCircumference;
+        // double left = encoderLeft.getRate() * wheelCMCircumference;
 
-        double h = Math.sqrt(right*right + left*left);
+        // double h = Math.sqrt(right*right + left*left);
 
-        if(left > right) speed = left;
-        else speed = right;
+        // if(left > right) speed = left;
+        // else speed = right;
 
-        angle = Math.asin(speed/h);
+        // angle = Math.asin(speed/h);
 
-        position.Add(RobotMath.PolarToCartesian(speed, angle));
+        // position.Add(RobotMath.PolarToCartesian(speed, angle));
     }
 
     public void Drive(double rotation, double speed) {
-        DriveTank(speed + rotation, -speed + rotation);
+        // FIXME: speed - rotation doesn't work as speed is still positive.
+        rotation *= turnSpeed;
+        DriveTank(speed + rotation, -(speed + rotation));
     }
 
     public void DriveTank(double right, double left) {
+        right *= driveSpeed;
+        left *= driveSpeed;
         motorRight1.set(right);
         motorRight2.set(right);
         motorLeft1.set(left);
