@@ -107,6 +107,16 @@ public class DriveTrain {
         // angle = Math.asin(speed/h);
 
         // position.Add(RobotMath.PolarToCartesian(speed, angle));
+
+        // Links for research:
+        // http://rossum.sourceforge.net/papers/DiffSteer/ 
+        // http://www.seattlerobotics.org/encoder/200010/dead_reckoning_article.html 
+
+        // Calculation:
+        // expr1 = AXLE_LENGTH * (right + left)
+        // position.x += expr1 * (sin((right - left) / AXLE_LENGTH + position.theta) - sin_current)
+        // position.y -= expr1 * (cos((right - left) / AXLE_LENGTH + position.theta) - cos_current)
+        // position.theta += (right - left) / AXLE_LENGTH
     }
 
     public void Drive(double rotation, double speed) {
