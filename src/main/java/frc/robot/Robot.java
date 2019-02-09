@@ -1,7 +1,7 @@
 package frc.robot;
 
 import frc.robot.components.*;
-
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -11,12 +11,18 @@ public class Robot extends TimedRobot {
 	// public static Claw claw = new Claw();
 	public static Controller controller = new Controller();
 
+	public static Encoder motorEncoder = new Encoder(4, 5);
+
 	public Robot() {
 	}
 
 	@Override
 	public void robotInit() {
 		System.out.println("****** Robot Code Initializing ******");
+	}
+
+	@Override
+	public void robotPeriodic() {
 	}
 
 	// Autonomous code...
@@ -36,7 +42,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousPeriodic() {
-		System.out.println("****** Robot Autonomous Code Looping ******");
 	}
 
 	// Teleop Code...
@@ -59,11 +64,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 		System.out.println("****** Robot Disabled Code Initializing ******");
+
+		driveTrain.DriveToPoint(10, 4);
 	}
 
 	@Override
 	public void disabledPeriodic() {
-		System.out.println("****** Robot Disabled Code Looping ******");
 	}
 
 	// Test code...
@@ -75,6 +81,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
-		System.out.println("****** Robot Test Code Looping ******");
+		System.out.println("Encoder Count = " + motorEncoder.get() + " | Encoder Rate = " + motorEncoder.getRate() + " | Encoder Raw = " motorEncoder.getRaw());
 	}
 }

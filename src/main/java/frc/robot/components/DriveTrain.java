@@ -17,8 +17,10 @@ public class DriveTrain {
     private Spark motorLeft1 = new Spark(RobotMap.DRIVE_TRAIN_MOTOR_LEFT_1);
     private Spark motorLeft2 = new Spark(RobotMap.DRIVE_TRAIN_MOTOR_LEFT_2);
 
-    private Encoder encoderRight = new Encoder(0, 1);
-    private Encoder encoderLeft = new Encoder(0, 1);
+    // private Encoder encoderRight = new Encoder(0, 1);
+    // private Encoder encoderLeft = new Encoder(0, 1);
+    private Encoder encoderRight;
+    private Encoder encoderLeft;
 
     private double distance;
     private double angle;
@@ -60,10 +62,16 @@ public class DriveTrain {
 
     public void DriveToAngle(double angle) {
         // TODO: Implement.
+
+        DriveTank(0, 0);
+        System.out.println("Driving to angle.");
     }
 
     public void DriveToDistance(double distance) {
         // TODO: Implement.
+
+        DriveTank(0, 0);
+        System.out.println("Driving to distance.");
     }
 
     // Robot rotates and drives towards a given x and y.
@@ -72,10 +80,12 @@ public class DriveTrain {
         double d = Math.sqrt(x*x + y*y);
         double a = Math.atan(y / x);
 
+        System.out.println("distance = " + d + "angle = " + a);
+
         // FIXME: Bad implementation.
-        new Thread(() -> { DriveToAngle(a); });
+        new Thread(() -> { DriveToAngle(a); }).start();
         // FIXME: Bad implementation.
-        new Thread(() -> { DriveToDistance(d); });
+        new Thread(() -> { DriveToDistance(d); }).start();
     }
 
     // Robot smoothly navigates a path.
