@@ -25,10 +25,11 @@ public class DriveTrain {
     private double distance;
     private double angle;
 
-    public double driveSpeed;
-    public double turnSpeed;
+    public double driveSpeed = 0.4;
+    public double turnSpeed = 0.2;
 
-    public DriveTrain() { }
+    public DriveTrain() {
+    }
 
     public double GetWorldX() {
         // TODO: Test and debug.
@@ -112,6 +113,7 @@ public class DriveTrain {
         // FIXME: speed - rotation doesn't work as speed is still positive.
         rotation *= turnSpeed;
         DriveTank(speed + rotation, -(speed + rotation));
+        System.out.println("Speed = " + speed + " | Rotation = " + rotation);
     }
 
     public void DriveTank(double right, double left) {

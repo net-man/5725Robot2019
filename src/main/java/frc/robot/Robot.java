@@ -53,11 +53,14 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		// System.out.println("****** Robot Teleop Code Looping ******");
+		// TODO: Review.
 
 		driveTrain.Drive(controller.GetX(), controller.GetY());
 		System.out.println("Controller X: " + controller.x + "Y: " + controller.y);
 	}
+
+	// Delete me once printing control x and y is no longer needed.
+	int tick = 0;
 
 	// Disabled code...
 
@@ -81,6 +84,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
-		System.out.println("Encoder Count = " + motorEncoder.get() + " | Encoder Rate = " + motorEncoder.getRate() + " | Encoder Raw = " motorEncoder.getRaw());
+		System.out.println("Encoder Count = " + motorEncoder.get() + " | Encoder Rate = " + motorEncoder.getRate() + " | Encoder Raw = " + motorEncoder.getRaw());
 	}
 }
