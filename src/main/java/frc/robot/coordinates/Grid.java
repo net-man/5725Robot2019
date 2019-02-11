@@ -6,6 +6,7 @@ import frc.utils.Vector2Int;
 public class Grid {
     public Node[][] nodes;
 
+    // FIXME: Horrible implementation.
     public enum Positions {
         // FIXME: Consider making these variables into a dictionary that cab be dynamically loaded.
         // Robot Start //
