@@ -18,6 +18,7 @@ public class Pathfinding {
     }
 
     public void Solve(Vector2Int start, Vector2Int goal) {
+        // FIXME: 99.99% sure this is really broken.
         openSet.add(start);
 
         Vector2Int current = new Vector2Int();
