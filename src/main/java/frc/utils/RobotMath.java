@@ -2,8 +2,10 @@ package frc.utils;
 
 public class RobotMath {
     public static Vector2 PolarToCartesian(double speed, double angle) {
-        return new Vector2();
-        // FIXME: Implement Polar to Cartesian.
+        double x = Math.sin(angle)*speed;
+        double y = Math.cos(angle)*speed;
+
+        return new Vector2(x, y);
     }
 
     public static Vector2 CartesianToPolar(double x, double y) {
