@@ -53,6 +53,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousPeriodic() {
+		// TODO: Addd CommandQueue.Periodic here.
+		// To achive this, adding a CommandQueue class to Robot.java might help.
 	}
 
 	// Teleop Code...
