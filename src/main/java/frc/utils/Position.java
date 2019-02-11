@@ -12,6 +12,6 @@ public class Position {
     // I think memory might be more important to us then cycles so I'm in favor of 
     // floats but I might be overlooking something.
     public float GetDistance() {
-        return Math.sqrt(x*x + y*y);
+        return (float)Math.sqrt(x*x + y*y);
     }
 }
