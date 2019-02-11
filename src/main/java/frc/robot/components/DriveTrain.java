@@ -4,6 +4,7 @@ import frc.utils.*;
 
 import edu.wpi.first.wpilibj.*;
 import frc.robot.RobotMap;
+import frc.robot.extra.settings.*;
 
 public class DriveTrain {
     // Some things to note.
@@ -25,10 +26,16 @@ public class DriveTrain {
     private double distance;
     private double angle;
 
+    // TODO: Implement speed. It's quite redundent but whatever.
+    public double speed = 1.0;
     public double driveSpeed = 0.4;
     public double turnSpeed = 0.2;
 
-    public DriveTrain() {
+    public DriveTrain() { }
+    public DriveTrain(DriveTrainSettings settings) {
+        speed = settings.speed;
+        driveSpeed = settings.driveSpeed;
+        turnSpeed = settings.turnSpeed;
     }
 
     public double GetWorldX() {
