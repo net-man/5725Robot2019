@@ -29,6 +29,8 @@ public class Controller {
         return x;
     }
 
+    // TODO: Test Snapping. I'm fairly sure it somewhat works but I'm also not sure if it's useful.
+    // Same wtih 'GetSnappedX'
     public double GetSnappedY() {
         double y = joystick.getRawAxis(1);
 
