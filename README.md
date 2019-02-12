@@ -61,7 +61,7 @@ The arm also be something. Not sure what but it doesn't seem like a bit issue an
 
 For the claw I hope I am right in saying that it only has two states. open / close.
 
-### ~AUTONOMOUS~
+### ~\ AUTONOMOUS ~\
 
 If you end up getting to pathfinding and what not I would suggest possibly trying to contact me as I will have a bit of communication (probably).
 
