@@ -73,23 +73,13 @@ Once you find the saving code (in ProgramWindow.cs -> Program.onExit),
 
 you need to first enable it and debug it if necessary.
 
-
-
 Then add something like Program.data.service["nodes"] = grid.pixels
-
-
 
 First you will need to make pixels visible in PathfindingGrid.cs -> long[,] pixels
 
-
-
 Doing that should output a json file with a few variables followed by a 2d array of Int64.
 
-
-
 The 2d array of Int64 act as "walls" of sorts that the pathfinding can't go through. This is represented in binary however so 0 would be passable and 1 would be impassible.
-
-
 
 2. If you make it past that, next will be reading the json export file in the robot program. (Java) The only important varibles I think are:
 
@@ -107,8 +97,6 @@ A grid of bits acting as walls in the pathfinding.
 
 A method of going from grid units to cms.
 
-
-
 From the "GridMaker" program there should be a pathfinding algorithm that can be imported (or just extensively debug the java solution.)
 
 For getting and setting individual bits there is also solutions in the "GridMaker" program under PathfindingGrid -> SetPixel() and GetPixel()
@@ -118,8 +106,6 @@ After all of that you should have:
 A grid of bits in Int64 form.
 A grid of floats OR calculationNodes (depending on which version of pathfinding: Java or C#).
 A Pathfinding solution that solves this grid.
-
-
 
 That's a lot of stuff.
 
@@ -163,12 +149,12 @@ There aren't too many things that could be optimized besides pathfinding but loo
 
 If (somehow) there is literally nothing to do, there are a few things that may be interesting to work of if anyone is so inclined.
 
-#### Custom Logging.
+#### 1. Custom Logging.
 
 This could be useful for debug specific things if there was a log flagging system, color coding, etc.
 read up on ascii escape codes
 
-#### WPILIB wifi table communication.
+#### 2. WPILIB wifi table communication.
 
 This could be neat for getting and drawing the robots position on a grid or why not. This could also be used for off-loading things from the robot to the drive station.
 
@@ -177,9 +163,5 @@ This could be neat for getting and drawing the robots position on a grid or why 
 I don't doubt there at least 20 things I have missed but so far this has been what I have been working on. (Or at least minus the last two sections.)
 
 A few notes to end on:
-
-As an excuse for the grammatic failures in this document I would like to credit that to the current time which is 3:00a.m. If this document is a nightmare to read, (which is about what I expect) blame the clock.
-
-If there is a place in this document where I am telling you to do something completely non-sensible, just ignore what I say to do.
 
 If there are questions for me from getting confused with the mess of a document to some question on odd code implementations, I should be able to communicate via slack at least some of the time.
