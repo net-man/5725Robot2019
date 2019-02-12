@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Robot extends TimedRobot {
 	public static DriveTrain driveTrain = new DriveTrain();
+
+	// FIXME: why isnt this working?
 	public static CommandQueue commandQueue = new CommandQueue();
 
 	// public static Elevator elevator = new Elevator();
