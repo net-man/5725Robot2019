@@ -165,7 +165,7 @@ If (somehow) there is literally nothing to do, there are a few things that may b
 
 #### Custom Logging.
 
-This could be useful for debug specific things if there was a log fagging system, color coding, etc.
+This could be useful for debug specific things if there was a log flagging system, color coding, etc.
 read up on ascii escape codes
 
 #### WPILIB wifi table communication.
