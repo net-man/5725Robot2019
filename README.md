@@ -132,3 +132,54 @@ Even if you haven't, it still should be pretty easy.
 The special bit of this is that as long as we continue to track the robot position, we could drive to anywhere on the field, whenever, totally autonomously. This includes auto-alignment which I think would be pretty helpful.
 
 If anyone actually ends up doing this, first of all: sorry. Second, that's quite impressive, good job.
+
+### Camera Code
+
+I really don't have anything on this. Luckily, I don't believe it to be terribly hard to implement but it has been a while.
+
+Sorry if it's something extremely hard to do and I have just left it until (almost) last.
+
+### Nice to have Things
+
+There is a lot of small things that can be done if there is nothing else to be worked on or fighting with autonomous just seems like to much of a bother.
+
+#### JSON settings. This seems complicated but should be rather easy. I do believe I have implemented quite bit of this already.
+
+For this, I am using Gson which has some good documentation that you could read through or you could just look at what I already have. It's a fairly simple library to use and isn't hard to understand
+
+#### Proper code commenting. If Json settings seem like a bad idea, there is always comments to add to code. 
+
+This will boost readability of the code. I should have done this at the start but have been too lazy to. For that I apologize.
+
+#### Proper code naming. This is also code cleanup but I think it may be necessary.
+
+Most methods and classes I feel make sense but there are probably things that could be done better.
+
+#### Optimization
+
+There aren't too many things that could be optimized besides pathfinding but looking around never hurts.
+
+### Things For Fun
+
+If (somehow) there is literally nothing to do, there are a few things that may be interesting to work of if anyone is so inclined.
+
+#### Custom Logging.
+
+This could be useful for debug specific things if there was a log fagging system, color coding, etc.
+read up on ascii escape codes
+
+#### WPILIB wifi table communication.
+
+This could be neat for getting and drawing the robots position on a grid or why not. This could also be used for off-loading things from the robot to the drive station.
+
+### Conclusion
+
+I don't doubt there at least 20 things I have missed but so far this has been what I have been working on. (Or at least minus the last two sections.)
+
+A few notes to end on:
+
+As an excuse for the grammatic failures in this document I would like to credit that to the current time which is 3:00a.m. If this document is a nightmare to read, (which is about what I expect) blame the clock.
+
+If there is a place in this document where I am telling you to do something completely non-sensible, just ignore what I say to do.
+
+If there are questions for me from getting confused with the mess of a document to some question on odd code implementations, I should be able to communicate via slack at least some of the time.
