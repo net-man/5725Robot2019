@@ -20,7 +20,7 @@ public class Claw {
         // TODO: Consider better naming then 'Position'.
         // Position is fine but I feel like there could be a more clear descriptor.
 
-        return mainClaw.getPosition()
+        return mainClaw.getPosition();
     }
 
     public void SetPosition(double value) {
