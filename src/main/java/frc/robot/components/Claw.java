@@ -10,6 +10,7 @@ public class Claw {
     // WPILIB get's mad if one tries defining a component that already has a port.
     private Encoder encoder;
 
+    // this is just a test
     public void Rotate(double amount) {
         mainClaw.set(amount);
     }
