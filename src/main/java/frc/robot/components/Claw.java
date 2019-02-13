@@ -6,13 +6,17 @@ import frc.robot.RobotMap;
 public class Claw {
     public Spark motor1 = new Spark(RobotMap.CLAW_ROTATION_MOTOR_1);
 
-    // FIXME: Define encoder. I don't do this because WPILIB get's mad if one tries defining a component that already has a port.
+    // FIXME: Define encoder. I don't do this because 
+    // WPILIB get's mad if one tries defining a component that already has a port.
     private Encoder encoder;
 
     public void Rotate(double amount) {
         motor1.set(amount);
     }
-
+    /**
+     * 
+     * @return nothing. can not get position of claw yet
+     */
     public double GetPosition() {
         // TODO: Implement get position.
 
@@ -23,8 +27,8 @@ public class Claw {
 
     public void SetPosition(double value) {
         // TODO: Implement set position.
-        
         // TODO: Again, think about possible better names.
+        motor1.setPosition(value);
     }
 
     public void ToggleSafty(boolean isSafe) {

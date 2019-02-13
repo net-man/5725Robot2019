@@ -71,8 +71,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		// TODO: Review.
-
+		// TODO: check the code for this.
 		driveTrain.Drive(controller.GetX(), controller.GetY());
 		System.out.println("Controller X: " + controller.x + "Y: " + controller.y);
 	}
