@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class CommandQueue {
     
     public List<Command> commands = new ArrayList<Command>();
+    
     public CommandQueue(){
         
     }
