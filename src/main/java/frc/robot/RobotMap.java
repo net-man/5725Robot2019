@@ -13,6 +13,7 @@ public class RobotMap {
     // Elevator Ports
     public static int ELEVATOR_MOTOR_LIFT_1 = 999;
     public static int ELEVATOR_MOTOR_ENCODER_1 = 999;
+    public static int ELEVATOR_MOTOR_ENCODER_2 = 999;
 
     // Arm Ports
     public static int ARM_MOTOR_ROTATION_1 = 999;
