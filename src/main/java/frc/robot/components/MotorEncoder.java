@@ -8,13 +8,14 @@ import frc.robot.RobotMap;
  */
 public class MotorEncoder {
 
-    private Encoder driveTrainEncoder = new Encoder(RobotMap.DRIVE_TRAIN_MOTOR_LEFT_1, RobotMap.DRIVE_TRAIN_MOTOR_LEFT_2);
+    public static Encoder driveTrainEncoderLeft = new Encoder(RobotMap.DRIVE_TRAIN_MOTOR_ENCODER_LEFT_1, RobotMap.DRIVE_TRAIN_MOTOR_LEFT_2);
+    public static Encoder driveTrainEncoderRight = new Encoder(RobotMap.DRIVE_TRAIN_MOTOR_ENCODER_RIGHT_1, RobotMap.DRIVE_TRAIN_MOTOR_RIGHT_2);
 
     public MotorEncoder(){
         // TODO: make constructer
     }
 
-    public int getRotations(){
-        return driveTrainEncoder.get();
+    public int getRotationsLeft(){
+        return driveTrainEncoderLeft.get();
     }
 }
