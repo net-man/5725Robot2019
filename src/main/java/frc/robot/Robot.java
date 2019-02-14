@@ -98,8 +98,8 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 		// Delete this when testing with the encoder is done.
 		// I'm not quite sure which one gets rotations per update. Use wichever one does.
-		System.out.println("Encoder Count = " + motorEncoder.get() + " | Encoder Rate = " + motorEncoder.getRate() + " | Encoder Raw = " + motorEncoder.getRaw());
-		int rate = motorEncoder.getRate();
+		System.out.println("Encoder Count = " + MotorEncoder.driveTrainEncoderLeft.get() + " | Encoder Rate = " + MotorEncoder.driveTrainEncoderLeft.getRate() + " | Encoder Raw = " + MotorEncoder.driveTrainEncoderLeft.getRaw());
+		float rate = (float) MotorEncoder.driveTrainEncoderLeft.getRate();
 		float wheelCircumference = 2.0f;
 		float distance = rate * wheelCircumference;
 		
