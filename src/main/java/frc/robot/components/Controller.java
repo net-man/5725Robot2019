@@ -6,8 +6,9 @@ import frc.robot.RobotMap;
 public class Controller {
     public Joystick joystick = new Joystick(RobotMap.CONTROLLER_PORT_1);
 
-    private double x = 0.0;
-    private double y = 0.0;
+    // Need to find out where these are used
+    public double x = 0.0;
+    public double y = 0.0;
 
     public double[] snapValues = new double[] { 0.0, 0.3, 1.0 };
 
@@ -20,7 +21,7 @@ public class Controller {
     }
 
     // TODO: Test Snapping. I'm fairly sure it somewhat works but I'm also not sure if it's useful.
-    // Same wtih 'GetSnappedX'
+    // Same wtih 'GetSnappedY'
     public double GetSnappedX() {
         double x = joystick.getRawAxis(0);
 

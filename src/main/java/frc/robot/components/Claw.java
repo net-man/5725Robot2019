@@ -27,7 +27,7 @@ public class Claw {
     public void SetPosition(double value) {
         // TODO: Implement set position.
         // doest really set position but rather moves it
-        mainClaw.setPosition(value);
+        mainClaw.set(value);
     }
 
     public void ToggleSafty(boolean isSafe) {
