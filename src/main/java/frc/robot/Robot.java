@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.components.*;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -71,6 +72,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		// TODO: check the code for this.
+		// Does not work wheel doesn't move backwards to rotate in place
 		driveTrain.Drive(controller.GetX(), controller.GetY());
 		System.out.println("Controller X: " + controller.x + "Y: " + controller.y);
 	}
@@ -98,11 +100,12 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 		// Delete this when testing with the encoder is done.
 		// I'm not quite sure which one gets rotations per update. Use wichever one does.
-		System.out.println("Encoder Count = " + MotorEncoder.driveTrainEncoderLeft.get() + " | Encoder Rate = " + MotorEncoder.driveTrainEncoderLeft.getRate() + " | Encoder Raw = " + MotorEncoder.driveTrainEncoderLeft.getRaw());
-		float rate = (float) MotorEncoder.driveTrainEncoderLeft.getRate();
-		float wheelCircumference = 2.0f;
-		float distance = rate * wheelCircumference;
+		// System.out.println("Encoder Count = " + MotorEncoder.driveTrainEncoderLeft.get() + " | Encoder Rate = " + MotorEncoder.driveTrainEncoderLeft.getRate() + " | Encoder Raw = " + MotorEncoder.driveTrainEncoderLeft.getRaw());
+		// float rate = (float) MotorEncoder.driveTrainEncoderLeft.getRate();
+		// float wheelCircumference = 2.0f;
+		// float distance = rate * wheelCircumference;
 		
-		System.out.println("Distance = " + distance);
+		// System.out.println("Distance = " + distance);
+		controller.joystickButton.get();
 	}
 }
