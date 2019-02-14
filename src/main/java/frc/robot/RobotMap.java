@@ -1,6 +1,11 @@
 package frc.robot;
 
 public class RobotMap {
+    /*
+    * valuees of 999 mean they have not been assigned
+    *
+    */
+
     // DriveTrain Ports
     public static int DRIVE_TRAIN_MOTOR_RIGHT_1 = 8;
     public static int DRIVE_TRAIN_MOTOR_RIGHT_2 = 2;
