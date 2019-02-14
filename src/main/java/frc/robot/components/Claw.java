@@ -4,34 +4,37 @@ import edu.wpi.first.wpilibj.*;
 import frc.robot.RobotMap;
 
 public class Claw {
-    public Spark motor1 = new Spark(RobotMap.CLAW_ROTATION_MOTOR_1);
+    public Spark mainClaw = new Spark(RobotMap.CLAW_ROTATION_MOTOR_1);
 
-    // FIXME: Define encoder. I don't do this because WPILIB get's mad if one tries defining a component that already has a port.
+    // FIXME: Define encoder. I don't do this because 
+    // WPILIB get's mad if one tries defining a component that already has a port.
     private Encoder encoder;
 
+    // this is just a test
     public void Rotate(double amount) {
-        motor1.set(amount);
+        mainClaw.set(amount);
     }
-
+    
     public double GetPosition() {
-        // TODO: Implement get position.
+        // TODO: Not the best implematation I think need to test.
 
         // TODO: Consider better naming then 'Position'.
         // Position is fine but I feel like there could be a more clear descriptor.
-        return Double.NaN;
+
+        return mainClaw.getPosition();
     }
 
     public void SetPosition(double value) {
         // TODO: Implement set position.
-        
-        // TODO: Again, think about possible better names.
+        // doest really set position but rather moves it
+        mainClaw.setPosition(value);
     }
 
     public void ToggleSafty(boolean isSafe) {
-        motor1.setSafetyEnabled(isSafe);
+        mainClaw.setSafetyEnabled(isSafe);
     }
 
     public void Stop() {
-        motor1.stopMotor();
+        mainClaw.stopMotor();
     }
 }
