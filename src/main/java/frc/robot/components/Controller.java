@@ -6,7 +6,7 @@ import frc.robot.RobotMap;
 
 public class Controller {
     public Joystick joystick = new Joystick(RobotMap.CONTROLLER_PORT_1);
-    // public JoystickButton joystickButton = new Joy
+    public JoystickButton joystickButton = new JoystickButton(joystick, 0);
 
     // Need to find out where these are used
     public double x = 0.0;
