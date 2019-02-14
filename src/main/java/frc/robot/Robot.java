@@ -16,9 +16,8 @@ public class Robot extends TimedRobot {
 	public static Controller controller = new Controller();
 
 
-	// TODO: Delete me.
 	// This is a test encoder that should be deleted once finished testing.
-	public static Encoder motorEncoder = new Encoder(4, 5);
+	// public static Encoder motorEncoder = new Encoder(4, 5);
 
 	public Robot() {
 	}
