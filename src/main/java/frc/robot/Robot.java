@@ -1,5 +1,6 @@
 package frc.robot;
 
+import frc.robot.autonomous.CommandQueue;
 import frc.robot.components.*;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;

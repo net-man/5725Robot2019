@@ -8,7 +8,7 @@ public class CommandQueue {
     public List<Command> commands = new ArrayList<Command>();
     
     public CommandQueue(){
-        
+    // so we dont need anythin in here which is dope
     }
     public void Periodic() {
         for(Command command : commands) {
