@@ -6,7 +6,10 @@ import java.util.ArrayList;
 public class CommandQueue {
     
     public List<Command> commands = new ArrayList<Command>();
-
+    
+    public CommandQueue(){
+        
+    }
     public void Periodic() {
         for(Command command : commands) {
             if(command.IsFinished() == false) {

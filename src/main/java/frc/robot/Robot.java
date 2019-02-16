@@ -2,19 +2,23 @@ package frc.robot;
 
 import frc.robot.components.*;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Robot extends TimedRobot {
 	public static DriveTrain driveTrain = new DriveTrain();
+
+	// FIXME: why isnt this working?
+	public static CommandQueue commandQueue = new CommandQueue();
+
 	// public static Elevator elevator = new Elevator();
 	// public static Claw claw = new Claw();
 	public static Controller controller = new Controller();
 
 
-	// TODO: Delete me.
 	// This is a test encoder that should be deleted once finished testing.
-	public static Encoder motorEncoder = new Encoder(4, 5);
+	// public static Encoder motorEncoder = new Encoder(4, 5);
 
 	public Robot() {
 	}
@@ -39,6 +43,8 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		System.out.println("****** Robot Autonomous Code Initializing ******");
 		
+		//Use 'commandQueue.commands.add(COMMAND)
+
 		// This is throw-away test code.
 		// Delete it once it get's in the way.
 		// Also be careful when/if running it... I'm not sure if it will end that well.
@@ -53,8 +59,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousPeriodic() {
-		// TODO: Addd CommandQueue.Periodic here.
-		// To achive this, adding a CommandQueue class to Robot.java might help.
+		commandQueue.Periodic();
 	}
 
 	// Teleop Code...
@@ -66,8 +71,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		// TODO: Review.
-
+		// TODO: check the code for this.
+		// Does not work wheel doesn't move backwards to rotate in place
 		driveTrain.Drive(controller.GetX(), controller.GetY());
 		System.out.println("Controller X: " + controller.x + "Y: " + controller.y);
 	}
@@ -94,6 +99,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 		// Delete this when testing with the encoder is done.
-		System.out.println("Encoder Count = " + motorEncoder.get() + " | Encoder Rate = " + motorEncoder.getRate() + " | Encoder Raw = " + motorEncoder.getRaw());
+		// I'm not quite sure which one gets rotations per update. Use wichever one does.
+		// System.out.println("Encoder Count = " + MotorEncoder.driveTrainEncoderLeft.get() + " | Encoder Rate = " + MotorEncoder.driveTrainEncoderLeft.getRate() + " | Encoder Raw = " + MotorEncoder.driveTrainEncoderLeft.getRaw());
+		// float rate = (float) MotorEncoder.driveTrainEncoderLeft.getRate();
+		// float wheelCircumference = 2.0f;
+		// float distance = rate * wheelCircumference;
+		
+		// System.out.println("Distance = " + distance);
+		controller.joystickButton.get();
 	}
 }

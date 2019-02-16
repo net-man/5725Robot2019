@@ -1,11 +1,14 @@
 package frc.robot.components;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.RobotMap;
 
 public class Controller {
     public Joystick joystick = new Joystick(RobotMap.CONTROLLER_PORT_1);
+    public JoystickButton joystickButton = new JoystickButton(joystick, 0);
 
+    // Need to find out where these are used
     public double x = 0.0;
     public double y = 0.0;
 
@@ -19,6 +22,8 @@ public class Controller {
         return joystick.getRawAxis(1);
     }
 
+    // TODO: Test Snapping. I'm fairly sure it somewhat works but I'm also not sure if it's useful.
+    // Same wtih 'GetSnappedY'
     public double GetSnappedX() {
         double x = joystick.getRawAxis(0);
 
@@ -28,9 +33,10 @@ public class Controller {
 
         return x;
     }
-
-    // TODO: Test Snapping. I'm fairly sure it somewhat works but I'm also not sure if it's useful.
-    // Same wtih 'GetSnappedX'
+    public double isTriggurePressed(){
+        // TODO: get if a triggure is pressed
+        return 0.0f;
+    }
     public double GetSnappedY() {
         double y = joystick.getRawAxis(1);
 
