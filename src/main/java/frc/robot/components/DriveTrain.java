@@ -129,11 +129,7 @@ public class DriveTrain {
     public void Drive(double rotation, double speed) {
         // FIXME: speed - rotation doesn't work as speed is still positive.
         rotation *= turnSpeed;
-<<<<<<< HEAD
         DriveTank(speed  + rotation, speed - rotation);
-=======
-        DriveTank(speed + rotation, -1*(speed + rotation));
->>>>>>> 9529e03872fc7aa83f32d7199d4e320347562c5d
         System.out.println("Speed = " + speed + " | Rotation = " + rotation);
     }
 
