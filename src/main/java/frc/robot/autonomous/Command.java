@@ -23,9 +23,9 @@ public class Command {
     /**
      * A method that runs every robot update until the Command is finished.
      */
-    public void Periodic() { }
+    public void periodic() { }
     /**
      * A method that runs when the command is finished.
      */
-    public void Finish() { }
+    public void finish() { }
 }

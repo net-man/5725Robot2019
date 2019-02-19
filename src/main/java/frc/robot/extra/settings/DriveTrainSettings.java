@@ -1,12 +1,37 @@
 package frc.robot.extra.settings;
 
+import frc.utils.Vector2;
+
 public class DriveTrainSettings {
-    public double speed;
     public double driveSpeed;
     public double turnSpeed;
-    // TODO: Define things like ports and autonomous values.
-    // Autonomous contained in individual settings classes might rule
-    // out the autnomous settings.
-    // "autonomous values" refers to things like arm drop off distance,
-    // cargo positions, etc.
+
+    public double distancePerRevolution;
+     
+     /**
+      * Decides what direction the motor encoder is facing. This could also be
+      * changed by flipping the a and b ports of the encoder.
+      */
+     public boolean isEncoderReversed;
+     public boolean isEncoderEnabled;
+ 
+     // Autonomous Values //
+     public double autonomousSpeed;
+ 
+     public Vector2 autonomousStartPosition;
+     public Vector2 autonomousEndPosition;;
+     // etc...
+     
+     // Ports //
+     public int portMotorRight1;
+     public int portMotorRight2;
+
+     public int portMotorLeft1;
+     public int portMotorLeft2;
+     
+     public int portEncoderRightA;
+     public int portEncoderRightB;
+     
+     public int portEncoderLeftA;
+     public int portEncoderLeftB;
 }

@@ -22,7 +22,7 @@ public class ExampleCommand extends Command {
     * Periodic is called every robot update.
     */
     @Override
-    public void Periodic() {
+    public void periodic() {
         // Prints to console 20 times and then ends.
         index++;
         if(index == 20) isFinished = true;
@@ -34,7 +34,7 @@ public class ExampleCommand extends Command {
     * Finish is called when the command ends.
     */
     @Override
-    public void Finish() {
+    public void finish() {
         System.out.printf("Example command finished.");
     }
 }

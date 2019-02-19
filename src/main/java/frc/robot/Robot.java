@@ -9,20 +9,12 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Robot extends TimedRobot {
 	public static DriveTrain driveTrain = new DriveTrain();
+	public static Elevator elevator = new Elevator();
+	public static Claw claw = new Claw();
 
-	// FIXME: why isnt this working?
-	public static CommandQueue commandQueue = new CommandQueue();
-
-	// public static Elevator elevator = new Elevator();
-	// public static Claw claw = new Claw();
 	public static Controller controller = new Controller();
 
-
-	// This is a test encoder that should be deleted once finished testing.
-	// public static Encoder motorEncoder = new Encoder(4, 5);
-
-	public Robot() {
-	}
+	public static CommandQueue commandQueue = new CommandQueue();
 
 	@Override
 	public void robotInit() {
@@ -49,13 +41,13 @@ public class Robot extends TimedRobot {
 		// This is throw-away test code.
 		// Delete it once it get's in the way.
 		// Also be careful when/if running it... I'm not sure if it will end that well.
-		driveTrain.ToggleSafty(false);
-		driveTrain.Drive(0.0, 1.0);
+		driveTrain.toggleSafty(false);
+		driveTrain.drive(0.0, 1.0);
 
 		Timer.delay(1.0);
 
-		driveTrain.Stop();
-		driveTrain.ToggleSafty(true);
+		driveTrain.stop();
+		driveTrain.toggleSafty(true);
 	}
 
 	@Override
@@ -72,10 +64,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		// TODO: check the code for this.
-		// Does not work wheel doesn't move backwards to rotate in place
-		driveTrain.Drive(controller.GetX(), controller.GetY());
-		System.out.println("Controller X: " + controller.x + "Y: " + controller.y);
+		driveTrain.drive(controller.GetX(), controller.GetY());
 	}
 
 

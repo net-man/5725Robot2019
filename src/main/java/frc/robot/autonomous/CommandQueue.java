@@ -22,11 +22,11 @@ public class CommandQueue {
         for(Command command : commands) {
             // Update eaach command that is still running.
             if(command.isFinished == false) {
-                command.Periodic();
+                command.periodic();
             }
             // Remove the commands that have finished.
             else {
-                command.Finish();
+                command.finish();
                 commands.remove(command);
             }
         }
