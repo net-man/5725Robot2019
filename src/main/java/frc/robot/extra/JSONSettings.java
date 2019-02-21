@@ -10,13 +10,13 @@ import java.util.List;
 import com.google.gson.*;
 
 public class JSONSettings {
-    private Gson gson;
+    private static Gson gson;
 
     public JSONSettings() {
         gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
-    // FIXME: Test writing and reading to path.
+    // TODO: Test writing and reading to path.
     // If it doesn't work try adding '/home/lvuser/' in front.
     // ex. /home/lvuser/Output.txt.
     public static void Write(String path, String json) {
@@ -47,14 +47,12 @@ public class JSONSettings {
     }
 
     public static <T> void Serialize(String path, T object) {
-        Gson gson = new Gson();
         String json = gson.toJson(object);
 
         JSONSettings.Write(path, json);
     }
 
     public static <T> void DeSerialize(String path, Class<T> type) {
-        Gson gson = new Gson();
         String json = JSONSettings.Read(path);
 
         gson.fromJson(json, type);

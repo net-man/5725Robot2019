@@ -1,7 +1,6 @@
 package frc.robot.components;
 
 import edu.wpi.first.wpilibj.*;
-import frc.robot.RobotMap;
 import frc.robot.extra.settings.ClawSettings;
 
 /**

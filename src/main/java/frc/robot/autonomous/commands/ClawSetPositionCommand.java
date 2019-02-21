@@ -2,7 +2,6 @@ package frc.robot.autonomous.commands;
 
 import frc.robot.Robot;
 import frc.robot.autonomous.Command;
-import frc.robot.components.Claw;
 import frc.utils.RobotMath;
 
 /**

@@ -3,7 +3,6 @@ package frc.robot.components;
 import frc.utils.*;
 
 import edu.wpi.first.wpilibj.*;
-import frc.robot.RobotMap;
 import frc.robot.extra.settings.*;
 
 /**
