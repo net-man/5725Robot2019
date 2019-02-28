@@ -1,7 +1,9 @@
-package frc.robot.components;
+/* package frc.robot.components;
 
 import edu.wpi.first.wpilibj.*;
 import frc.robot.RobotMap;
+
+Claw caught the big broke as of 2/19/19 so has been commented out for now - Raj
 
 public class Claw {
     public Spark mainClaw = new Spark(RobotMap.CLAW_ROTATION_MOTOR_1);
@@ -38,3 +40,4 @@ public class Claw {
         mainClaw.stopMotor();
     }
 }
+    */

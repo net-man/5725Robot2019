@@ -11,6 +11,7 @@ public class Robot extends TimedRobot {
 	public static DriveTrain driveTrain = new DriveTrain();
 
 	// FIXME: why isnt this working?
+	// Fix any bugs pls we're trying to run the code - Raj
 	public static CommandQueue commandQueue = new CommandQueue();
 
 	// public static Elevator elevator = new Elevator();
@@ -38,8 +39,9 @@ public class Robot extends TimedRobot {
 		// This should probably be tested if you want to use this method however because I may be wrong about this.
 	}
 
-	// Autonomous code...
 
+	// Autonomous code...
+/* Honestly just yoss autonomous out the window for now - Raj
 	@Override
 	public void autonomousInit() {
 		System.out.println("****** Robot Autonomous Code Initializing ******");
@@ -109,4 +111,5 @@ public class Robot extends TimedRobot {
 		// System.out.println("Distance = " + distance);
 		controller.joystickButton.get();
 	}
+	*/
 }
