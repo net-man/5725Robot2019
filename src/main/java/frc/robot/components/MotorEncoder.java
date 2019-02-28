@@ -1,27 +1,29 @@
 package frc.robot.components;
 
 import edu.wpi.first.wpilibj.Encoder;
-import frc.robot.RobotMap;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
 /**
  * MotorEncoder
  */
 public class MotorEncoder {
+    private Encoder encoder;
 
-    public Encoder driveTrainEncoderLeft = new Encoder(RobotMap.DRIVE_TRAIN_MOTOR_LEFT_1, RobotMap.DRIVE_TRAIN_MOTOR_LEFT_2);
-    public Encoder driveTrainEncoderRight = new Encoder(RobotMap.DRIVE_TRAIN_MOTOR_RIGHT_1, RobotMap.DRIVE_TRAIN_MOTOR_RIGHT_2);
+    public double value;
+    public int count;
 
-    public Encoder elevatorrEncoder = new Encoder(RobotMap.ELEVATOR_MOTOR_ENCODER_1, RobotMap.ELEVATOR_MOTOR_ENCODER_2); 
-
-    public MotorEncoder(){
-        // TODO: make constructer
+    public MotorEncoder(int channelA, int channelB, boolean isReversed) {
+        encoder = new Encoder(channelA, channelB, isReversed, EncodingType.k4X);
     }
 
-    public int getRotationsLeft(){
-        return driveTrainEncoderLeft.get();
+    public void reset() {
+        encoder.reset();
     }
 
-    public int getRotationsRight(){
-        return driveTrainEncoderRight.get();
+    public int getCountSinceLastCall() {
+        int currentCount = count - encoder.get();
+        count = encoder.get();
+
+        return currentCount;
     }
 }

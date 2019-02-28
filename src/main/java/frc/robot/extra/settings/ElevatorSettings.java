@@ -1,10 +1,30 @@
 package frc.robot.extra.settings;
 
 public class ElevatorSettings {
-    public double speed;
-    // TODO: Define things like ports and autonomous values.
-    // Autonomous contained in individual settings classes might rule
-    // out the autnomous settings.
-    // "autonomous values" refers to things like arm drop off distance,
-    // cargo positions, etc.
+     // Values //
+     public double speed;
+    
+     public double distancePerRevolution;
+     
+     /**
+      * Decides what direction the motor encoder is facing. This could also be
+      * changed by flipping the a and b ports of the encoder.
+      */
+     public boolean isEncoderReversed;
+     public boolean isEncoderEnabled;
+ 
+     // Autonomous Values //
+     public double autonomousSpeedUp;
+     public double autonomousSpeedDown;
+ 
+     public double autonomousTopPosition;
+     public double autonomousBottomPosition;
+
+     public double autonomousHatchPickupPosition;
+     // etc...
+     
+     // Ports //
+     public int portMotor;
+     public int portEncoderA;
+     public int portEncoderB;
 }

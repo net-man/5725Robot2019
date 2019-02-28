@@ -6,45 +6,6 @@ import frc.utils.Vector2Int;
 public class Grid {
     public Node[][] nodes;
 
-    // FIXME: Horrible implementation.
-    public enum Positions {
-        // FIXME: Consider making these variables into a dictionary that cab be dynamically loaded.
-        // Robot Start //
-        ROBOT_START_1(0, 0, 0.0),
-        ROBOT_START_2(0, 0, 0.0),
-        ROBOT_START_3(0, 0, 0.0),
-
-        // Field Hatch Pickup //
-        FIELD_HATCH_PICKUP_RIGHT_1(0, 0, 0.0),
-        FIELD_HATCH_PICKUP_LEFT_1(0, 0, 0.0),
-
-        // Field Ball Pickup //
-        FIELD_BALL_PICKUP_RIGHT_1(0, 0, 0.0),
-        FIELD_BALL_PICKUP_LEFT_1(0, 0, 0.0),
-
-        DEFAULT(0, 0, 0.0);
-
-        public Vector2Int position;
-        public double rotation;
-        private Positions(int x, int y, double rotation) {
-            position.x = x;
-            position.y = y;
-            this.rotation = rotation;
-        }
-    }
-
-    public enum NeighbourIndex {
-        RIGHT(0),
-        LEFT(1),
-        TOP(2),
-        BOTTOM(3);
-
-        int index;
-        NeighbourIndex(int index) {
-            this.index = index;
-        }
-    }
-
     public Grid(int sizeX, int sizeY) {
         nodes = new Node[sizeX][sizeY];
     }

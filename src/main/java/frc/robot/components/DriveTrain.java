@@ -3,153 +3,200 @@ package frc.robot.components;
 import frc.utils.*;
 
 import edu.wpi.first.wpilibj.*;
-import frc.robot.RobotMap;
 import frc.robot.extra.settings.*;
 
+/**
+ * Robot drive train component. This class represent the driving base of the
+ * robot and is how the robot moves around.
+ * <p>
+ * The movement is setup with two motors on each side controlling one gear on
+ * each side. (two motors = more force) both sides moving will generate speed
+ * and the difference in side speeds will generate rotation.
+ */
 public class DriveTrain {
-    // Some things to note.
-    // 'Drive' will add onto the thing.
-    // 'DriveTo' will set the thing to a specific value.
-    // For example 'DriveDistance(x)' will drive forwards by x amount.
-    // 'DriveToDistance(x)' will drive to x as distance of the robot's polar coordinates.
+    /**
+     * The first right motor.
+     */
+    private Spark motorRight1;
 
-    private Spark motorRight1 = new Spark(RobotMap.DRIVE_TRAIN_MOTOR_RIGHT_1);
-    private Spark motorRight2 = new Spark(RobotMap.DRIVE_TRAIN_MOTOR_RIGHT_2);
-    private Spark motorLeft1 = new Spark(RobotMap.DRIVE_TRAIN_MOTOR_LEFT_1);
-    private Spark motorLeft2 = new Spark(RobotMap.DRIVE_TRAIN_MOTOR_LEFT_2);
+    /**
+     * The second right motor.
+     */
+    private Spark motorRight2;
 
-    // private Encoder encoderRight = new Encoder(0, 1);
-    // private Encoder encoderLeft = new Encoder(0, 1);
+    /**
+     * The first left motor.
+     */
+    private Spark motorLeft1;
+
+    /**
+     * The second left motor.
+     */
+    private Spark motorLeft2;
+
+    /**
+     * The right drive train encoder. both encoder will be used with each other to
+     * get the robots world coordinates.
+     * <p>
+     * This is optional. To disable it, set
+     * {@link DriveTrainSettings#isEncoderEnabled} to false.
+     */
     private Encoder encoderRight;
+
+    /**
+     * The left drive train encoder. both encoder will be used with each other to
+     * get the robots world coordinates.
+     * <p>
+     * This is optional. To disable it, set
+     * {@link DriveTrainSettings#isEncoderEnabled} to false.
+     */
     private Encoder encoderLeft;
 
-    private double distance;
-    private double angle;
+    /**
+     * The drive train settings for this drive train. This will affect things like
+     * speed and encoder direction.
+     */
+    private DriveTrainSettings settings;
 
-    // TODO: Implement speed. It's quite redundent but whatever.
-    public double speed = 1.0;
+    /**
+     * The drive train drive speed. This will affect the speed of all
+     * user-controlled inputs.
+     * <p>
+     * Autonomous speeds are controlled seperataly.
+     */
     public double driveSpeed = 0.4;
+
+    /**
+     * The drive train turn speed. This will affect the speed of all user-controlled
+     * inputs.
+     * <p>
+     * Autonomous speeds are controlled seperataly.
+     */
     public double turnSpeed = 0.2;
 
-    public DriveTrain() { }
-    public DriveTrain(DriveTrainSettings settings) {
-        speed = settings.speed;
+    /**
+     * The total amount of times the drive train motor has done a full rotation.
+     */
+    public int encoderCount;
+
+    /**
+     * The amount of cm's the drive train moves in one motor rotation.
+     */
+    public double distancePerRevolution;
+
+    /**
+     * Initialize drive train values.
+     */
+    { load(new DriveTrainSettings()); }
+
+    /**
+     * Loads new {@link DriveTrainSettings} into the drive train. This should be
+     * used with {@link JSONSettings} to dynamically change the robots settings
+     * without having to recompile code.
+     * 
+     * @param settings The Desired {@link DriveTrainSettings} to load into the drive
+     *                 train.
+     */
+    public void load(DriveTrainSettings settings) {
+        this.settings = settings;
+
         driveSpeed = settings.driveSpeed;
         turnSpeed = settings.turnSpeed;
-    }
+        distancePerRevolution = settings.distancePerRevolution;
 
-    public double GetWorldX() {
-        // TODO: Test and debug.
-        return Math.sin(angle) * distance;
-    }
-    public double GetWorldY() {
-        // TODO: Test and debug.
-        return Math.cos(angle) * distance;
-    }
+        motorRight1 = new Spark(settings.portMotorRight1);
+        motorRight2 = new Spark(settings.portMotorRight2);
+        motorLeft1 = new Spark(settings.portMotorLeft1);
+        motorLeft2 = new Spark(settings.portMotorLeft2);
 
-    // Set the distance of the robot from it's current position.
-    public void DriveDistance(double cm, double speed) {
-        // TODO: Test and debug.
-        double d = distance + cm;
-        while(Math.sqrt(distance*distance + d*d) > 1) {
-            DriveTank(speed, speed);
+        if (settings.isEncoderEnabled) {
+            encoderRight = new Encoder(settings.portEncoderRightA, settings.portEncoderRightB,
+                    settings.isEncoderReversed, Encoder.EncodingType.k4X);
+            encoderLeft = new Encoder(settings.portEncoderLeftA, settings.portEncoderLeftB, settings.isEncoderReversed,
+                    Encoder.EncodingType.k4X);
         }
     }
 
-    // Set the angle or rotation of the robot.
-    public void DriveDegrees(double degrees, double speed) {
-        double a = angle + degrees;
-        // TODO: Test and debug.
-        // FIXME: I don't think this if statement works.
-        // What is should do is decide which way the bot is spinning based on what angle is desired.
-        if(degrees < 0) speed *= -1;
-        while(Math.sqrt(angle*angle + a*a) > 1) {
-            DriveTank(speed, -speed);
-        }
-    }
-
-    public void DriveToAngle(double angle) {
-        // TODO: Implement.
-
-        DriveTank(0, 0);
-        System.out.println("Driving to angle.");
-    }
-
-    public void DriveToDistance(double distance) {
-        // TODO: Implement.
-
-        DriveTank(0, 0);
-        System.out.println("Driving to distance.");
-    }
-
-    // Robot rotates and drives towards a given x and y.
-    public void DriveToPoint(double x, double y) {
-        // TODO: Test and debug.
-        double d = Math.sqrt(x*x + y*y);
-        double a = Math.atan(y / x);
-
-        System.out.println("distance = " + d + "angle = " + a);
-
-        // FIXME: Bad implementation.
-        new Thread(() -> { DriveToAngle(a); }).start();
-        // FIXME: Bad implementation.
-        new Thread(() -> { DriveToDistance(d); }).start();
-    }
-
-    // Robot smoothly navigates a path.
-    public void DriveToPointPath(Vector2[] points) {
-        // TODO: Test and debug.
-    }
-
-    public void CalculateWorldPosition() {
-        // TODO: Test and debug.
-        // double right = encoderRight.getRate() * wheelCMCircumference;
-        // double left = encoderLeft.getRate() * wheelCMCircumference;
-
-        // double h = Math.sqrt(right*right + left*left);
-
-        // if(left > right) speed = left;
-        // else speed = right;
-
-        // angle = Math.asin(speed/h);
-
-        // position.Add(RobotMath.PolarToCartesian(speed, angle));
-
-        // Links for research:
-        // http://rossum.sourceforge.net/papers/DiffSteer/ 
-        // http://www.seattlerobotics.org/encoder/200010/dead_reckoning_article.html 
-
-        // Calculation:
-        // expr1 = AXLE_LENGTH * (right + left)
-        // position.x += expr1 * (sin((right - left) / AXLE_LENGTH + position.theta) - sin_current)
-        // position.y -= expr1 * (cos((right - left) / AXLE_LENGTH + position.theta) - cos_current)
-        // position.theta += (right - left) / AXLE_LENGTH
-    }
-
-    public void Drive(double rotation, double speed) {
-        // FIXME: speed - rotation doesn't work as speed is still positive.
+    /**
+     * Moves the drive train by rotation and distance speed.
+     * <p>
+     * This method is affected by {@link #driveSpeed} and {@link #turnSpeed}.
+     * 
+     * @param rotation The rotation speed the robot should drive. Between -1 and 1.
+     * @param speed    The distance speed the robot should drive. Between -1 and 1.
+     */
+    public void drive(double rotation, double speed) {
         rotation *= turnSpeed;
-        DriveTank(speed  + rotation, speed - rotation);
-        System.out.println("Speed = " + speed + " | Rotation = " + rotation);
+        driveTank(speed + rotation, speed - rotation);
     }
 
-    public void DriveTank(double right, double left) {
+    /**
+     * Moves the drive train by right speed and left speed.
+     * <p>
+     * This method is affected by {@link #driveSpeed} and {@link #turnSpeed}.
+     * 
+     * @param right The right side speed the drive train should drive. Between -1
+     *              and 1.
+     * @param left  The left side speed the drive train should drive. Between -1 and
+     *              1.
+     */
+    public void driveTank(double right, double left) {
         right *= driveSpeed;
         left *= driveSpeed;
+
         motorRight1.set(right);
         motorRight2.set(right);
         motorLeft1.set(left);
         motorLeft2.set(left);
     }
 
-    public void ToggleSafty(boolean isSafe) {
+    /**
+     * Get's the drive trains current position. This values comes from the motor
+     * encoder value difference.
+     * <p>
+     * This means that if the direction is changed between calls of this method, the
+     * position will be off.
+     * 
+     * @return The x abd y position of the drive train in centimeters.
+     */
+    public Vector2 GetPosition() {
+        // Links for research:
+        // http://rossum.sourceforge.net/papers/DiffSteer/
+        // http://www.seattlerobotics.org/encoder/200010/dead_reckoning_article.html
+
+        // Calculation:
+        // expr1 = AXLE_LENGTH * (right + left)
+        // position.x += expr1 * (sin((right - left) / AXLE_LENGTH + position.theta) -
+        // sin_current)
+        // position.y -= expr1 * (cos((right - left) / AXLE_LENGTH + position.theta) -
+        // cos_current)
+        // position.theta += (right - left) / AXLE_LENGTH
+        return new Vector2();
+    }
+
+    /**
+     * Toggles the driveTrain motor's safety.Safety sets the motors speed to zero
+     * every update so the robot doesn't continue to drive, even when control is
+     * turned off.
+     * <p>
+     * Turning this off is good for autnomous in conjunction with
+     * {@code Timer.delay(time)}.
+     * 
+     * @param isSafe If set to true, the motors will be set to zero every update. If
+     *               set to false, they will continue to spin at the previous speed
+     *               until a new speed is set.
+     */
+    public void toggleSafty(boolean isSafe) {
         motorRight1.setSafetyEnabled(isSafe);
         motorRight1.setSafetyEnabled(isSafe);
         motorLeft1.setSafetyEnabled(isSafe);
         motorLeft2.setSafetyEnabled(isSafe);
     }
 
-    public void Stop() {
+    /**
+     * Stops all motors in drive train.
+     */
+    public void stop() {
         motorRight1.stopMotor();
         motorRight2.stopMotor();
         motorLeft1.stopMotor();

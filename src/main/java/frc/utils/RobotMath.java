@@ -9,7 +9,15 @@ public class RobotMath {
     }
 
     public static Vector2 CartesianToPolar(double x, double y) {
-        return new Vector2();
-        // FIXME: Implement Cartesian to Polar.
+        double a = Math.atan(y / x) * 180/Math.PI;
+        double s = Math.hypot(x, y);
+        
+        return new Vector2(a, s);
+    }
+
+    public static double Direction(double current, double target) {
+        if(current == target) return 0;
+        return current > target ? 1 : -1;
+        
     }
 }

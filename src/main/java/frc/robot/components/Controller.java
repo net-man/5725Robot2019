@@ -22,28 +22,39 @@ public class Controller {
         return joystick.getRawAxis(1);
     }
 
-    // TODO: Test Snapping. I'm fairly sure it somewhat works but I'm also not sure if it's useful.
+    // TODO: Test Snapping. I'm fairly sure it somewhat works but I'm also not sure
+    // if it's useful.
+    // TODO: Replace with rampped joystick control.
     // Same wtih 'GetSnappedY'
     public double GetSnappedX() {
         double x = joystick.getRawAxis(0);
 
-        for(int i = 0; i <= snapValues.length-2; i++) {
-            if(x > snapValues[i]) x = snapValues[i+1];
+        for (int i = 0; i <= snapValues.length - 2; i++) {
+            if (x > snapValues[i])
+                x = snapValues[i + 1];
         }
 
         return x;
     }
-    public double isTriggurePressed(){
-        // TODO: get if a triggure is pressed
-        return 0.0f;
-    }
+
     public double GetSnappedY() {
         double y = joystick.getRawAxis(1);
 
-        for(int i = 0; i <= snapValues.length-2; i++) {
-            if(y > snapValues[i]) y = snapValues[i+1];
+        for (int i = 0; i <= snapValues.length - 2; i++) {
+            if (y > snapValues[i])
+                y = snapValues[i + 1];
         }
 
         return y;
+    }
+
+    public double GetRightTrigger() {
+        // TODO: get if a trigger is pressed
+        return 0.0f;
+    }
+
+    public double GetLeftTrigger() {
+        // TODO: get if a trigger is pressed
+        return 0.0f;
     }
 }
