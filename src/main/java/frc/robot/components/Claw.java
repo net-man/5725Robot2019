@@ -1,4 +1,4 @@
-package frc.robot.components;
+/* package frc.robot.components;
 
 import edu.wpi.first.wpilibj.*;
 import frc.robot.extra.settings.ClawSettings;
@@ -128,3 +128,4 @@ public class Claw {
         motor.stopMotor();
     }
 }
+    */
