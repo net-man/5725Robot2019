@@ -1,5 +1,7 @@
 package frc.robot.coordinates;
 
+import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.utils.Vector2;
 import frc.utils.Vector2Int;
 
@@ -17,10 +19,10 @@ public class Grid {
         }
 
         Vector2Int[] neighbours = new Vector2Int[4];
-        if(x + 1 < nodes.length-1) neighbours[NeighbourIndex.RIGHT.index] = new Vector2Int(x + 1, y);
-        if(x - 1 < nodes.length-1) neighbours[NeighbourIndex.RIGHT.index] = new Vector2Int(x + 1, y);
-        if(y + 1 < nodes[x].length-1) neighbours[NeighbourIndex.RIGHT.index] = new Vector2Int(x, y + 1);
-        if(y - 1 < nodes[x].length-1) neighbours[NeighbourIndex.RIGHT.index] = new Vector2Int(x, y - 1);
+        if(x + 1 < nodes.length-1) neighbours[0] = new Vector2Int(x + 1, y);
+        if(x - 1 < nodes.length-1) neighbours[1] = new Vector2Int(x + 1, y);
+        if(y + 1 < nodes[x].length-1) neighbours[2] = new Vector2Int(x, y + 1);
+        if(y - 1 < nodes[x].length-1) neighbours[3] = new Vector2Int(x, y - 1);
 
         return neighbours;
     }

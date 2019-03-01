@@ -3,10 +3,11 @@ package frc.robot.extra.settings;
 import frc.utils.Vector2;
 
 public class DriveTrainSettings {
-    public double driveSpeed;
-    public double turnSpeed;
+    public double speed = 0.4;
+    public double driveSpeed = 0.4;
+    public double turnSpeed = 0.3;
 
-    public double distancePerRevolution;
+    public double distancePerRevolution = 1.0;
      
      /**
       * Decides what direction the motor encoder is facing. This could also be
@@ -16,22 +17,22 @@ public class DriveTrainSettings {
      public boolean isEncoderEnabled;
  
      // Autonomous Values //
-     public double autonomousSpeed;
+     public double autonomousSpeed = 0.5;
  
      public Vector2 autonomousStartPosition;
-     public Vector2 autonomousEndPosition;;
+     public Vector2 autonomousEndPosition;
      // etc...
      
      // Ports //
-     public int portMotorRight1;
-     public int portMotorRight2;
+     public int portMotorRight1 = 5;
+     public int portMotorRight2 = 4;
 
-     public int portMotorLeft1;
-     public int portMotorLeft2;
+     public int portMotorLeft1 = 3;
+     public int portMotorLeft2 = 2;
      
-     public int portEncoderRightA;
-     public int portEncoderRightB;
+     public int portEncoderRightA = 99;
+     public int portEncoderRightB = 99;
      
-     public int portEncoderLeftA;
-     public int portEncoderLeftB;
+     public int portEncoderLeftA = 99;
+     public int portEncoderLeftB = 99;
 }

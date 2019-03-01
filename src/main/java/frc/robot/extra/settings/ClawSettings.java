@@ -2,9 +2,9 @@ package frc.robot.extra.settings;
 
 public class ClawSettings {
     // Values //
-    public double speed;
+    public double speed = 0.6;
     
-    public double distancePerRevolution;
+    public double distancePerRevolution = 1.0;
     
     /**
      * Decides what direction the motor encoder is facing. This could also be
@@ -20,7 +20,7 @@ public class ClawSettings {
     public double autonomousBallClosedPosition;
     
     // Ports //
-    public int portMotor;
-    public int portEncoderA;
-    public int portEncoderB;
+    public int portMotor = 6;
+    public int portEncoderA = 99;
+    public int portEncoderB = 99;
 }

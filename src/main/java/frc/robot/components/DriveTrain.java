@@ -64,7 +64,7 @@ public class DriveTrain {
      * <p>
      * Autonomous speeds are controlled seperataly.
      */
-    public double driveSpeed = 0.4;
+    public double driveSpeed;
 
     /**
      * The drive train turn speed. This will affect the speed of all user-controlled
@@ -72,7 +72,13 @@ public class DriveTrain {
      * <p>
      * Autonomous speeds are controlled seperataly.
      */
-    public double turnSpeed = 0.2;
+    public double turnSpeed;
+
+    /**
+     * The maximum speed magnitude the robot can move.
+     */
+
+    public double speed;
 
     /**
      * The total amount of times the drive train motor has done a full rotation.
@@ -87,7 +93,7 @@ public class DriveTrain {
     /**
      * Initialize drive train values.
      */
-    { load(new DriveTrainSettings()); }
+    public DriveTrain() { load(new DriveTrainSettings()); }
 
     /**
      * Loads new {@link DriveTrainSettings} into the drive train. This should be
@@ -99,7 +105,9 @@ public class DriveTrain {
      */
     public void load(DriveTrainSettings settings) {
         this.settings = settings;
-
+        
+        // TODO: Add global max speed to the rest of the components.
+        speed = settings.speed;
         driveSpeed = settings.driveSpeed;
         turnSpeed = settings.turnSpeed;
         distancePerRevolution = settings.distancePerRevolution;
@@ -126,8 +134,11 @@ public class DriveTrain {
      * @param speed    The distance speed the robot should drive. Between -1 and 1.
      */
     public void drive(double rotation, double speed) {
-        rotation *= turnSpeed;
+        rotation = RobotMath.Clamp(rotation, -turnSpeed, turnSpeed);
+        speed = RobotMath.Clamp(speed, -driveSpeed, driveSpeed);
         driveTank(speed + rotation, speed - rotation);
+        System.out.println("Right Speed : " + rotation);
+        System.out.println("Left Speed  : " + speed);
     }
 
     /**
@@ -141,13 +152,14 @@ public class DriveTrain {
      *              1.
      */
     public void driveTank(double right, double left) {
-        right *= driveSpeed;
-        left *= driveSpeed;
+        right = RobotMath.Clamp(right, -speed, speed);
+        left = RobotMath.Clamp(left, -speed, speed);
 
+        // TODO: Make inverse motor rotation another setting in DriveTrainSettings
         motorRight1.set(right);
         motorRight2.set(right);
-        motorLeft1.set(left);
-        motorLeft2.set(left);
+        motorLeft1.set(-left);
+        motorLeft2.set(-left);
     }
 
     /**

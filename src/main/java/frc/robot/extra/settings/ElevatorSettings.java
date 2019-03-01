@@ -2,9 +2,9 @@ package frc.robot.extra.settings;
 
 public class ElevatorSettings {
      // Values //
-     public double speed;
+     public double speed = 0.5;
     
-     public double distancePerRevolution;
+     public double distancePerRevolution = 1.0;
      
      /**
       * Decides what direction the motor encoder is facing. This could also be
@@ -24,7 +24,7 @@ public class ElevatorSettings {
      // etc...
      
      // Ports //
-     public int portMotor;
-     public int portEncoderA;
-     public int portEncoderB;
+     public int portMotor = 7;
+     public int portEncoderA = 99;
+     public int portEncoderB = 99;
 }

@@ -20,4 +20,10 @@ public class RobotMath {
         return current > target ? 1 : -1;
         
     }
+
+    public static double Clamp(double current, double min, double max) {
+        if(current > max) return max;
+        if(current < min) return min;
+        return current;
+    }
 }
