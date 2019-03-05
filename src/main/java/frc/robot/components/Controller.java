@@ -1,14 +1,10 @@
 package frc.robot.components;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.RobotMap;
 
 public class Controller {
     public Joystick joystick = new Joystick(RobotMap.CONTROLLER_PORT_1);
-    public JoystickButton joystickButton = new JoystickButton(joystick, 0);
-
-    public double[] snapValues = new double[] { 0.0, 0.3, 1.0 };
 
     public double GetX() {
         return joystick.getRawAxis(0);
@@ -18,13 +14,47 @@ public class Controller {
         return joystick.getRawAxis(1);
     }
 
+    public double GetRightX() {
+        return joystick.getRawAxis(99);
+    }
+
+    public double GetRightY() {
+        return joystick.getRawAxis(99);
+    }
+
     public double GetRightTrigger() {
-        // TODO: get if a trigger is pressed
-        return 0.0f;
+        return joystick.getRawAxis(2);
     }
 
     public double GetLeftTrigger() {
-        // TODO: get if a trigger is pressed
-        return 0.0f;
+        return joystick.getRawAxis(3);
+    }
+
+    public boolean GetRightButtonTrigger() {
+        return joystick.getRawButton(99);
+    }
+
+    public boolean GetLeftButtonTrigger() {
+        return joystick.getRawButton(99);
+    }
+
+    public boolean GetButtonA() {
+        // TODO: Check if this is the correct id.
+        return joystick.getRawButton(0);
+    }
+    
+    public boolean GetButtonB() {
+        // TODO: Check if this is the correct id.
+        return joystick.getRawButton(1);
+    }
+
+    public boolean GetButtonX() {
+        // TODO: Check if this is the correct id.
+        return joystick.getRawButton(2);
+    }
+
+    public boolean GetButtonY() {
+        // TODO: Check if this is the correct id.
+        return joystick.getRawButton(3);
     }
 }

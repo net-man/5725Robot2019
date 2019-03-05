@@ -2,14 +2,12 @@ package frc.robot;
 
 import frc.robot.autonomous.CommandQueue;
 import frc.robot.components.*;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 
 public class Robot extends TimedRobot {
 	public static DriveTrain driveTrain = new DriveTrain();
 	public static Elevator elevator = new Elevator();
+	public static Arm arm = new Arm();
 	public static Claw claw = new Claw();
 
 	public static Controller controller = new Controller();
@@ -32,7 +30,6 @@ public class Robot extends TimedRobot {
 
 
 	// Autonomous code...
-/* Honestly just yoss autonomous out the window for now - Raj
 	@Override
 	public void autonomousInit() {
 		System.out.println("****** Robot Autonomous Code Initializing ******");
@@ -42,13 +39,14 @@ public class Robot extends TimedRobot {
 		// This is throw-away test code.
 		// Delete it once it get's in the way.
 		// Also be careful when/if running it... I'm not sure if it will end that well.
-		driveTrain.toggleSafty(false);
-		driveTrain.drive(0.0, 1.0);
 
-		Timer.delay(1.0);
+		// driveTrain.toggleSafty(false);
+		// driveTrain.drive(0.0, 1.0);
 
-		driveTrain.stop();
-		driveTrain.toggleSafty(true);
+		// Timer.delay(1.0);
+
+		// driveTrain.stop();
+		// driveTrain.toggleSafty(true);
 	}
 
 	@Override
@@ -89,15 +87,9 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
-		// Delete this when testing with the encoder is done.
-		// I'm not quite sure which one gets rotations per update. Use wichever one does.
-		// System.out.println("Encoder Count = " + MotorEncoder.driveTrainEncoderLeft.get() + " | Encoder Rate = " + MotorEncoder.driveTrainEncoderLeft.getRate() + " | Encoder Raw = " + MotorEncoder.driveTrainEncoderLeft.getRaw());
-		// float rate = (float) MotorEncoder.driveTrainEncoderLeft.getRate();
-		// float wheelCircumference = 2.0f;
-		// float distance = rate * wheelCircumference;
-		
-		// System.out.println("Distance = " + distance);
-		controller.joystickButton.get();
+		driveTrain.drive(controller.GetX(), controller.GetY());
+		elevator.lift(controller.GetRightTrigger() - controller.GetLeftTrigger());
+		arm.rotate(controller.GetRightY());
+		claw.rotate(controller.GetRightButtonTrigger() ? 1 : controller.GetLeftButtonTrigger() ? -1 : 0);
 	}
-	*/
 }

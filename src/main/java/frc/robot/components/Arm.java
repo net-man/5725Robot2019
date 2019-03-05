@@ -1,33 +1,34 @@
 package frc.robot.components;
 
 import edu.wpi.first.wpilibj.*;
-import frc.robot.extra.settings.ClawSettings;
+import frc.robot.extra.settings.ArmSettings;
 
 /**
- * Robot claw component. This class represents a generic claw-like structure
- * with a rotating axis opening and closing it.
+ * Robot elevator component. This class represents a basic arm with z
+ * rotation up and down.
  */
-public class Claw {
+public class Arm {
     /**
-     * The claw motor. the motors rotation will determine how open or closed the
-     * claw is.
+     * The arm motor. the motors rotation will determine how rotated arm is
+     * positioned.
      */
     private Spark motor;
 
     /**
-     * The claw encoder. This is used to get the current position of the claw. From
-     * this, exact claw positions can be set based on what is needed.
+     * The arm encoder. This is used to get the current position of the
+     * arm. From this, exact arm positions can be set based on what is
+     * needed.
      * <p>
-     * This is optional. To disable it, set {@link ClawSettings#isEncoderEnabled} to
-     * false.
+     * This is optional. To disable it, set
+     * {@link ElevatorSettings#isEncoderEnabled} to false.
      */
     private Encoder encoder;
 
     /**
-     * The claw settings for this claw. This will affect things like speed and
-     * encoder direction.
+     * The arm settings for this arm. This will affect things like speed
+     * and encoder direction.
      */
-    private ClawSettings settings;
+    private ArmSettings settings;
 
     /**
      * The robots base speed. This will affect the speed of all user-controlled
@@ -38,28 +39,29 @@ public class Claw {
     public double speed;
 
     /**
-     * The total amount of times the claw motor has done a full rotation.
+     * The total amount of times the arm motor has done a full rotation.
      */
     public int encoderCount;
 
     /**
-     * The amount of cm's the claw moves in one motor rotation.
+     * The amount of cm's the arm moves in one motor rotation.
      */
     public double distancePerRevolution;
 
     /**
-     * Initialize the claw's values.
+     * Initialize arm values.
      */
-    public Claw() { load(new ClawSettings()); }
+    public Arm() { load(new ArmSettings()); }
 
     /**
-     * Loads new {@link ClawSettings} into the claw. This should be used with
-     * {@link JSONSettings} to dynamically change the robots settings without having
-     * to recompile code.
+     * Loads new {@link ArmSettings} into the arm. This should be used
+     * with {@link JSONSettings} to dynamically change the robots settings without
+     * having to recompile code.
      * 
-     * @param settings The Desired {@link ClawSettings} to load into the claw.
+     * @param settings The Desired {@link ArmSettings} to load into the
+     *                 arm.
      */
-    public void load(ClawSettings settings) {
+    public void load(ArmSettings settings) {
         this.settings = settings;
 
         speed = settings.speed;
@@ -74,7 +76,7 @@ public class Claw {
     }
 
     /**
-     * Rotates the claw motor by a speed value.
+     * Moves the arm either up or down by a speed amount.
      * <p>
      * This method is affected by {@link #speed}.
      * 
@@ -86,13 +88,13 @@ public class Claw {
     }
 
     /**
-     * Get's the claws current position. This values comes from the motor encoder
-     * value difference.
+     * Get's the arm current position. This values comes from the motor
+     * encoder value difference.
      * <p>
      * This means that if the direction is changed between calls of this method, the
      * position will be off.
      * 
-     * @return The double position of the claw in centimeters.
+     * @return The double position of the arm in centimeters.
      */
     public double getPosition() {
         if (encoderCount == 0) {
@@ -106,9 +108,9 @@ public class Claw {
     }
 
     /**
-     * Toggles the claw motor's safety.Safety sets the motors speed to zero every
-     * update so the robot doesn't continue to drive, even when control is turned
-     * off.
+     * Toggles the arm motor's safety.Safety sets the motors speed to zero
+     * every update so the robot doesn't continue to drive, even when control is
+     * turned off.
      * <p>
      * Turning this off is good for autnomous in conjunction with
      * {@code Timer.delay(time)}.
@@ -122,7 +124,7 @@ public class Claw {
     }
 
     /**
-     * Stops all motors from spinning.
+     * Stops all motors in {@link Arm} from spinning.
      */
     public void stop() {
         motor.stopMotor();
