@@ -3,9 +3,9 @@ package frc.robot.extra.settings;
 import frc.utils.Vector2;
 
 public class DriveTrainSettings {
-    public double speed = 0.3;
-    public double driveSpeed = 0.6;
-    public double turnSpeed = 0.5;
+    public double speed = 0.4;
+    public double driveSpeed = 1.0;
+    public double turnSpeed = 0.8;
 
     public double distancePerRevolution = 1.0;
      

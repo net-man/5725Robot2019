@@ -17,6 +17,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		System.out.println("****** Robot Code Initializing ******");
+
+		// JSONSettings.
+		
+		// driveTrain = new DriveTrain();
+		// elevator = new Elevator();
+		// arm = new Arm();
+		// claw = new Claw();
 	}
 
 	@Override
@@ -89,9 +96,11 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 		driveTrain.drive(controller.GetX(), controller.GetY());
 		elevator.lift(controller.GetRightTrigger() - controller.GetLeftTrigger());
-		arm.rotate(controller.GetRightY());
-		
-		System.out.println("Claw = " + (controller.GetRightButtonTrigger() - controller.GetLeftButtonTrigger()));
+		arm.rotate(-controller.GetRightY());
 		claw.rotate(controller.GetRightButtonTrigger() - controller.GetLeftButtonTrigger());
+
+		System.out.print("Arm = " + (controller.GetRightY()) + "   ");
+		System.out.print("Lift = " + (controller.GetRightTrigger() - controller.GetLeftTrigger()) + "   ");		
+		System.out.println("Claw = " + (controller.GetRightButtonTrigger() - controller.GetLeftButtonTrigger()));
 	}
 }

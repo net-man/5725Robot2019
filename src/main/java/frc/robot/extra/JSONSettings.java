@@ -49,11 +49,17 @@ public class JSONSettings {
     public static <T> void Serialize(String path, T object) {
         String json = gson.toJson(object);
 
-        JSONSettings.Write(path, json);
+        JSONSettings.Write("/home/lvuser/" + path, json);
+    }
+    public static <T> void SerializeMultiple(String path, T object[]) {
+        
+        String json = gson.toJson(object);
+
+        JSONSettings.Write("/home/lvuser/" + path, json);
     }
 
     public static <T> void DeSerialize(String path, Class<T> type) {
-        String json = JSONSettings.Read(path);
+        String json = JSONSettings.Read("/home/lvuser/" + path);
 
         gson.fromJson(json, type);
     }

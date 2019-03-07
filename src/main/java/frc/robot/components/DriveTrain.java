@@ -138,8 +138,6 @@ public class DriveTrain {
         // speed = RobotMath.Clamp(speed * driveSpeed, -driveSpeed, driveSpeed);
         rotation *= turnSpeed;
         speed *= driveSpeed;
-        // speed = Math.sqrt(speed*speed);
-        // rotation = Math.sqrt(rotation*rotation);
         driveTank(speed + rotation, speed - rotation);
         // System.out.println("Right Speed : " + rotation);
         // System.out.println("Left Speed  : " + speed);
