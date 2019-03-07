@@ -90,6 +90,8 @@ public class Robot extends TimedRobot {
 		driveTrain.drive(controller.GetX(), controller.GetY());
 		elevator.lift(controller.GetRightTrigger() - controller.GetLeftTrigger());
 		arm.rotate(controller.GetRightY());
-		claw.rotate(controller.GetRightButtonTrigger() ? 1 : controller.GetLeftButtonTrigger() ? -1 : 0);
+		
+		System.out.println("Claw = " + (controller.GetRightButtonTrigger() - controller.GetLeftButtonTrigger()));
+		claw.rotate(controller.GetRightButtonTrigger() - controller.GetLeftButtonTrigger());
 	}
 }

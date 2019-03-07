@@ -20,7 +20,7 @@ public class ArmSettings {
     public double autonomousBallClosedPosition;
     
     // Ports //
-    public int portMotor = 6;
+    public int portMotor = 7;
     public int portEncoderA = 99;
     public int portEncoderB = 99;
 }

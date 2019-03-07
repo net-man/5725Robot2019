@@ -134,11 +134,15 @@ public class DriveTrain {
      * @param speed    The distance speed the robot should drive. Between -1 and 1.
      */
     public void drive(double rotation, double speed) {
-        rotation = RobotMath.Clamp(rotation, -turnSpeed, turnSpeed);
-        speed = RobotMath.Clamp(speed, -driveSpeed, driveSpeed);
+        // rotation = RobotMath.Clamp(rotation * turnSpeed, -turnSpeed, turnSpeed);
+        // speed = RobotMath.Clamp(speed * driveSpeed, -driveSpeed, driveSpeed);
+        rotation *= turnSpeed;
+        speed *= driveSpeed;
+        // speed = Math.sqrt(speed*speed);
+        // rotation = Math.sqrt(rotation*rotation);
         driveTank(speed + rotation, speed - rotation);
-        System.out.println("Right Speed : " + rotation);
-        System.out.println("Left Speed  : " + speed);
+        // System.out.println("Right Speed : " + rotation);
+        // System.out.println("Left Speed  : " + speed);
     }
 
     /**

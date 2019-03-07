@@ -2,7 +2,7 @@ package frc.robot.extra.settings;
 
 public class ClawSettings {
     // Values //
-    public double speed = 0.6;
+    public double speed = 1.0;
     
     public double distancePerRevolution = 1.0;
     

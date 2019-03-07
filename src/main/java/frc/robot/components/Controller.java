@@ -15,27 +15,27 @@ public class Controller {
     }
 
     public double GetRightX() {
-        return joystick.getRawAxis(99);
+        return joystick.getRawAxis(4);
     }
 
     public double GetRightY() {
-        return joystick.getRawAxis(99);
+        return joystick.getRawAxis(5);
     }
 
     public double GetRightTrigger() {
-        return joystick.getRawAxis(2);
-    }
-
-    public double GetLeftTrigger() {
         return joystick.getRawAxis(3);
     }
 
-    public boolean GetRightButtonTrigger() {
-        return joystick.getRawButton(99);
+    public double GetLeftTrigger() {
+        return joystick.getRawAxis(2);
     }
 
-    public boolean GetLeftButtonTrigger() {
-        return joystick.getRawButton(99);
+    public double GetRightButtonTrigger() {
+        return joystick.getRawButton(5) ? 1 : 0;
+    }
+
+    public double GetLeftButtonTrigger() {
+        return joystick.getRawButton(6) ? 1 : 0;
     }
 
     public boolean GetButtonA() {

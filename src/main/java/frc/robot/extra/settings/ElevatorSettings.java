@@ -24,7 +24,7 @@ public class ElevatorSettings {
      // etc...
      
      // Ports //
-     public int portMotor = 7;
+     public int portMotor = 9;
      public int portEncoderA = 99;
      public int portEncoderB = 99;
 }
