@@ -2,6 +2,8 @@ package frc.robot;
 
 import frc.robot.autonomous.CommandQueue;
 import frc.robot.components.*;
+import frc.robot.extra.JSONSettings;
+import frc.robot.extra.settings.RobotSettings;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 public class Robot extends TimedRobot {
@@ -18,12 +20,20 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		System.out.println("****** Robot Code Initializing ******");
 
-		// JSONSettings.
+		// FIXME: new JSONSettings() acts as JSONObject initializer. Just create a new Gson in each method that uses it.
+		new JSONSettings();
+		// JSONSettings.Serialize("settings", new RobotSettings());
 		
-		// driveTrain = new DriveTrain();
-		// elevator = new Elevator();
-		// arm = new Arm();
-		// claw = new Claw();
+		driveTrain.unload();
+		elevator.unload();
+		arm.unload();
+		claw.unload();
+
+		RobotSettings settings = (RobotSettings)JSONSettings.DeSerialize("Settings", RobotSettings.class);
+		driveTrain.load(settings.driveTrain);
+		elevator.load(settings.elevator);
+		arm.load(settings.arm);
+		claw.load(settings.claw);
 	}
 
 	@Override

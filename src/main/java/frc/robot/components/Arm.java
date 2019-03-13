@@ -76,6 +76,14 @@ public class Arm {
     }
 
     /**
+     * Frees all ports that were being used along with unloading / reseting anything else that requires it.
+     */
+    public void unload() {
+        motor.close();
+        if(encoder != null) encoder.close();
+    }
+
+    /**
      * Moves the arm either up or down by a speed amount.
      * <p>
      * This method is affected by {@link #speed}.

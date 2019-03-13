@@ -1,0 +1,57 @@
+{
+  "driveTrain": {
+    "speed": 0.4,
+    "driveSpeed": 1.0,
+    "turnSpeed": 0.8,
+    "distancePerRevolution": 1.0,
+    "isEncoderReversed": false,
+    "isEncoderEnabled": false,
+    "autonomousSpeed": 0.5,
+    "portMotorRight1": 5,
+    "portMotorRight2": 4,
+    "portMotorLeft1": 3,
+    "portMotorLeft2": 2,
+    "portEncoderRightA": 99,
+    "portEncoderRightB": 99,
+    "portEncoderLeftA": 99,
+    "portEncoderLeftB": 99
+  },
+  "elevator": {
+    "speed": 0.0,
+    "distancePerRevolution": 1.0,
+    "isEncoderReversed": false,
+    "isEncoderEnabled": false,
+    "autonomousSpeedUp": 0.0,
+    "autonomousSpeedDown": 0.0,
+    "autonomousTopPosition": 0.0,
+    "autonomousBottomPosition": 0.0,
+    "autonomousHatchPickupPosition": 0.0,
+    "portMotor": 9,
+    "portEncoderA": 99,
+    "portEncoderB": 99
+  },
+  "arm": {
+    "speed": 0.05,
+    "distancePerRevolution": 1.0,
+    "isEncoderReversed": false,
+    "isEncoderEnabled": false,
+    "autonomousSpeedOpen": 0.0,
+    "autonomousSpeedClose": 0.0,
+    "autonomousBallClosedPosition": 0.0,
+    "portMotor": 7,
+    "portEncoderA": 99,
+    "portEncoderB": 99
+  },
+  "claw": {
+    "speed": 1.0,
+    "distancePerRevolution": 1.0,
+    "isEncoderReversed": false,
+    "isEncoderEnabled": false,
+    "autonomousSpeedOpen": 0.0,
+    "autonomousSpeedClose": 0.0,
+    "autonomousBallClosedPosition": 0.0,
+    "portMotor": 6,
+    "portEncoderA": 99,
+    "portEncoderB": 99
+  }
+}

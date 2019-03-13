@@ -17,7 +17,7 @@ public class RobotMath {
 
     public static double Direction(double current, double target) {
         if(current == target) return 0;
-        return current > target ? 1 : -1;
+        return current > target ? -1 : 1;
         
     }
 

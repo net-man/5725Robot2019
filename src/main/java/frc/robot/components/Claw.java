@@ -72,6 +72,14 @@ public class Claw {
                     Encoder.EncodingType.k4X);
         }
     }
+    
+    /**
+     * Frees all ports that were being used along with unloading / reseting anything else that requires it.
+     */
+    public void unload() {
+        motor.close();
+        if(encoder != null) encoder.close();
+    }
 
     /**
      * Rotates the claw motor by a speed value.

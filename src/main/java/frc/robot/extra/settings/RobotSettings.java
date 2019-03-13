@@ -1,9 +1,15 @@
 package frc.robot.extra.settings;
 
 public class RobotSettings {
-    // TODO: Define things like ports and autonomous values.
-    // Autonomous contained in individual settings classes might rule
-    // out the autnomous settings.
-    // "autonomous values" refers to things like arm drop off distance,
-    // cargo positions, etc.
+    public DriveTrainSettings driveTrain;
+    public ElevatorSettings elevator;
+    public ArmSettings arm;
+    public ClawSettings claw;
+
+    public RobotSettings() {
+        driveTrain = new DriveTrainSettings();
+        elevator = new ElevatorSettings();
+        arm = new ArmSettings();
+        claw = new ClawSettings();
+    }
 }

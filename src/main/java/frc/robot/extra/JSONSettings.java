@@ -9,6 +9,8 @@ import java.util.List;
 
 import com.google.gson.*;
 
+import edu.wpi.first.wpilibj.Filesystem;
+
 public class JSONSettings {
     private static Gson gson;
 
@@ -24,8 +26,8 @@ public class JSONSettings {
         try {
             writer = new FileWriter(new File(path)); 
             writer.write(json);
-            writer.close();
             writer.flush();
+            writer.close();
         }
         catch(Exception e) { System.out.println("Can't write to file path. (" + path + ") \n exeption:" + e.getMessage()); }
     }
@@ -46,21 +48,17 @@ public class JSONSettings {
         return json;
     }
 
-    public static <T> void Serialize(String path, T object) {
+    public static void Serialize(String path, Object object) {
         String json = gson.toJson(object);
 
-        JSONSettings.Write("/home/lvuser/" + path, json);
-    }
-    public static <T> void SerializeMultiple(String path, T object[]) {
-        
-        String json = gson.toJson(object);
-
-        JSONSettings.Write("/home/lvuser/" + path, json);
+        // JSONSettings.Write("/home/lvuser/" + path, json);
+        // JSONSettings.Write(Filesystem.getDeployDirectory() + "/" + path + ".json", json);        
+        JSONSettings.Write("C:/Users/Nobody/Desktop/" + path + ".json", json);
     }
 
-    public static <T> void DeSerialize(String path, Class<T> type) {
-        String json = JSONSettings.Read("/home/lvuser/" + path);
+    public static <T> Object DeSerialize(String path, Class<T> type) {
+        String json = JSONSettings.Read("C:/Users/Nobody/Desktop/" + path + ".json");
 
-        gson.fromJson(json, type);
+        return gson.fromJson(json, type);
     }
 }

@@ -111,7 +111,7 @@ public class DriveTrain {
         driveSpeed = settings.driveSpeed;
         turnSpeed = settings.turnSpeed;
         distancePerRevolution = settings.distancePerRevolution;
-
+        
         motorRight1 = new Spark(settings.portMotorRight1);
         motorRight2 = new Spark(settings.portMotorRight2);
         motorLeft1 = new Spark(settings.portMotorLeft1);
@@ -126,6 +126,19 @@ public class DriveTrain {
     }
 
     /**
+     * Frees all ports that were being used along with unloading / reseting anything else that requires it.
+     */
+    public void unload() {
+        motorRight1.close();
+        motorRight2.close();
+        motorLeft1.close();
+        motorLeft2.close();
+
+        if(encoderRight != null) encoderRight.close();
+        if(encoderLeft != null) encoderLeft.close();
+    }
+
+    /**
      * Moves the drive train by rotation and distance speed.
      * <p>
      * This method is affected by {@link #driveSpeed} and {@link #turnSpeed}.
@@ -134,13 +147,19 @@ public class DriveTrain {
      * @param speed    The distance speed the robot should drive. Between -1 and 1.
      */
     public void drive(double rotation, double speed) {
-        // rotation = RobotMath.Clamp(rotation * turnSpeed, -turnSpeed, turnSpeed);
-        // speed = RobotMath.Clamp(speed * driveSpeed, -driveSpeed, driveSpeed);
         rotation *= turnSpeed;
         speed *= driveSpeed;
-        driveTank(speed + rotation, speed - rotation);
-        // System.out.println("Right Speed : " + rotation);
-        // System.out.println("Left Speed  : " + speed);
+
+        double right = rotation + rotation;
+        double left = rotation - rotation;
+
+        if(Math.abs(right) > 1.0) left += Math.abs(right) - RobotMath.Direction(right, -1.0);
+        if(Math.abs(left) > 1.0) right += Math.abs(left) - RobotMath.Direction(left, -1.0);
+
+        driveTank(right, left);
+
+        System.out.println("Right Speed : " + right);
+        System.out.println("Left Speed  : " + left);
     }
 
     /**
