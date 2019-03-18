@@ -15,6 +15,8 @@ public class DriveTrainSettings {
       */
      public boolean isEncoderReversed;
      public boolean isEncoderEnabled;
+
+     public boolean doNormalizeDrive = true;
  
      // Autonomous Values //
      public double autonomousSpeed = 0.5;

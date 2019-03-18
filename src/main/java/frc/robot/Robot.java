@@ -2,8 +2,6 @@ package frc.robot;
 
 import frc.robot.autonomous.CommandQueue;
 import frc.robot.components.*;
-import frc.robot.extra.JSONSettings;
-import frc.robot.extra.settings.RobotSettings;
 import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.TimedRobot;
 

@@ -91,6 +91,11 @@ public class DriveTrain {
     public double distancePerRevolution;
 
     /**
+     * If set to true, the drive value will be normalized as if the value was a circle of sorts.
+     */
+    public boolean doNormalizeDrive;
+
+    /**
      * Initialize drive train values.
      */
     public DriveTrain() { load(new DriveTrainSettings()); }
@@ -111,6 +116,8 @@ public class DriveTrain {
         driveSpeed = settings.driveSpeed;
         turnSpeed = settings.turnSpeed;
         distancePerRevolution = settings.distancePerRevolution;
+
+        doNormalizeDrive = settings.doNormalizeDrive;
         
         motorRight1 = new Spark(settings.portMotorRight1);
         motorRight2 = new Spark(settings.portMotorRight2);
@@ -150,8 +157,14 @@ public class DriveTrain {
         rotation *= turnSpeed;
         speed *= driveSpeed;
 
-        double right = rotation + rotation;
-        double left = rotation - rotation;
+        double right = speed + rotation;
+        double left = speed - rotation;
+
+        if(doNormalizeDrive == true) {
+            double magnitude = Math.sqrt(right * right + left * left);
+            right = right / magnitude;
+            left = left / magnitude;
+        }
 
         driveTank(right, left);
 

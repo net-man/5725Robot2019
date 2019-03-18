@@ -4,16 +4,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Paths;
-import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 
 import com.google.gson.*;
-
-import edu.wpi.first.wpilibj.Filesystem;
 
 public class JSONSettings {
     public static Gson GetGson() {

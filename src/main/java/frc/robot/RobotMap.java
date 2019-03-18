@@ -1,5 +1,6 @@
 package frc.robot;
 
+// TODO: Remove this class as it now goes unused.
 public class RobotMap {
     // DriveTrain Ports
     public static int DRIVE_TRAIN_MOTOR_RIGHT_1 = 8;
