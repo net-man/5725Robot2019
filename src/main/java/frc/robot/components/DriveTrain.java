@@ -153,13 +153,10 @@ public class DriveTrain {
         double right = rotation + rotation;
         double left = rotation - rotation;
 
-        if(Math.abs(right) > 1.0) left += Math.abs(right) - RobotMath.Direction(right, -1.0);
-        if(Math.abs(left) > 1.0) right += Math.abs(left) - RobotMath.Direction(left, -1.0);
-
         driveTank(right, left);
 
-        System.out.println("Right Speed : " + right);
-        System.out.println("Left Speed  : " + left);
+        // System.out.println("Right Speed : " + right);
+        // System.out.println("Left Speed  : " + left);
     }
 
     /**

@@ -2,7 +2,7 @@ package frc.robot.extra.settings;
 
 public class ElevatorSettings {
      // Values //
-     public double speed = 0.5;
+     public double speed = 0.4;
     
      public double distancePerRevolution = 1.0;
      

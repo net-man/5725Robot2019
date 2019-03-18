@@ -17,7 +17,7 @@
     "portEncoderLeftB": 99
   },
   "elevator": {
-    "speed": 0.0,
+    "speed": 0.8,
     "distancePerRevolution": 1.0,
     "isEncoderReversed": false,
     "isEncoderEnabled": false,

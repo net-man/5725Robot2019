@@ -15,5 +15,6 @@
     "**/.factorypath": true,
   },
   "java.home": "C:\\Program Files\\Java\\jdk-11.0.2",
-  "wpilib.deployOffline": true
+  "wpilib.deployOffline": true,
+  "wpilib.autoStartRioLog": false
 }

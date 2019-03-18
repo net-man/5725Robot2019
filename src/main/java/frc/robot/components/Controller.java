@@ -39,22 +39,18 @@ public class Controller {
     }
 
     public boolean GetButtonA() {
-        // TODO: Check if this is the correct id.
         return joystick.getRawButton(0);
     }
     
     public boolean GetButtonB() {
-        // TODO: Check if this is the correct id.
         return joystick.getRawButton(1);
     }
 
     public boolean GetButtonX() {
-        // TODO: Check if this is the correct id.
         return joystick.getRawButton(2);
     }
 
     public boolean GetButtonY() {
-        // TODO: Check if this is the correct id.
         return joystick.getRawButton(3);
     }
 }

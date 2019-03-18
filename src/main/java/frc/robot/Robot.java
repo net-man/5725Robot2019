@@ -4,6 +4,7 @@ import frc.robot.autonomous.CommandQueue;
 import frc.robot.components.*;
 import frc.robot.extra.JSONSettings;
 import frc.robot.extra.settings.RobotSettings;
+import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 public class Robot extends TimedRobot {
@@ -20,38 +21,43 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		System.out.println("****** Robot Code Initializing ******");
 
-		// FIXME: new JSONSettings() acts as JSONObject initializer. Just create a new Gson in each method that uses it.
-		new JSONSettings();
-		// JSONSettings.Serialize("settings", new RobotSettings());
-		
-		driveTrain.unload();
-		elevator.unload();
-		arm.unload();
-		claw.unload();
+		// driveTrain.unload();
+		// elevator.unload();
+		// arm.unload();
+		// claw.unload();
 
-		RobotSettings settings = (RobotSettings)JSONSettings.DeSerialize("Settings", RobotSettings.class);
-		driveTrain.load(settings.driveTrain);
-		elevator.load(settings.elevator);
-		arm.load(settings.arm);
-		claw.load(settings.claw);
+		// RobotSettings settings = (RobotSettings) JSONSettings.DeSerialize("Settings", RobotSettings.class);
+		// if (settings == null) {
+		// 	JSONSettings.Serialize("settings", new RobotSettings());
+		// 	settings = (RobotSettings) JSONSettings.DeSerialize("Settings", RobotSettings.class);
+		// }
+
+		// driveTrain.load(settings.driveTrain);
+		// elevator.load(settings.elevator);
+		// arm.load(settings.arm);
+		// claw.load(settings.claw);
+
+		System.out.println("Elevator Speed: " + elevator.speed);
 	}
 
 	@Override
 	public void robotPeriodic() {
-		// Robot periodic is a bit strange in that it constantly runs throughout the life of the robot.
-		// In other words it doesn't matter if it's autonomousPeriodic, disabledPeriodic, or whatever.
+		// Robot periodic is a bit strange in that it constantly runs throughout the
+		// life of the robot.
+		// In other words it doesn't matter if it's autonomousPeriodic,
+		// disabledPeriodic, or whatever.
 		// It will still run before calling those.
 
-		// This should probably be tested if you want to use this method however because I may be wrong about this.
+		// This should probably be tested if you want to use this method however because
+		// I may be wrong about this.
 	}
-
 
 	// Autonomous code...
 	@Override
 	public void autonomousInit() {
 		System.out.println("****** Robot Autonomous Code Initializing ******");
-		
-		//Use 'commandQueue.commands.add(COMMAND)
+
+		// Use 'commandQueue.commands.add(COMMAND)
 
 		// This is throw-away test code.
 		// Delete it once it get's in the way.
@@ -83,7 +89,6 @@ public class Robot extends TimedRobot {
 		driveTrain.drive(controller.GetX(), controller.GetY());
 	}
 
-
 	// Disabled code...
 
 	@Override
@@ -102,6 +107,8 @@ public class Robot extends TimedRobot {
 		System.out.println("****** Robot Test Code Initializing ******");
 	}
 
+	public static PWM   switchController = new PWM(1);
+
 	@Override
 	public void testPeriodic() {
 		driveTrain.drive(controller.GetX(), controller.GetY());
@@ -109,8 +116,9 @@ public class Robot extends TimedRobot {
 		arm.rotate(-controller.GetRightY());
 		claw.rotate(controller.GetRightButtonTrigger() - controller.GetLeftButtonTrigger());
 
-		System.out.print("Arm = " + (controller.GetRightY()) + "   ");
-		System.out.print("Lift = " + (controller.GetRightTrigger() - controller.GetLeftTrigger()) + "   ");		
-		System.out.println("Claw = " + (controller.GetRightButtonTrigger() - controller.GetLeftButtonTrigger()));
+		// System.out.print("Arm = " + (controller.GetRightY()) + "   ");
+		// System.out.print("Lift = " + (controller.GetRightTrigger() - controller.GetLeftTrigger()) + "   ");
+		// System.out.println("Claw = " + (controller.GetRightButtonTrigger() - controller.GetLeftButtonTrigger()));
+		System.out.println("Switch = " + switchController.getRaw());
 	}
 }
