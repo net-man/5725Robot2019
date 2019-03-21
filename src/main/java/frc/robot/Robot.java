@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.autonomous.CommandQueue;
 import frc.robot.components.*;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.TimedRobot;
 
@@ -105,18 +106,20 @@ public class Robot extends TimedRobot {
 		System.out.println("****** Robot Test Code Initializing ******");
 	}
 
-	public static PWM   switchController = new PWM(1);
+	public static DigitalInput switchController = new DigitalInput(1);
 
 	@Override
 	public void testPeriodic() {
 		driveTrain.drive(controller.GetX(), controller.GetY());
+		// driveTrain.driveTank(controller.GetX(), -controller.GetX());
 		elevator.lift(controller.GetRightTrigger() - controller.GetLeftTrigger());
 		arm.rotate(-controller.GetRightY());
 		claw.rotate(controller.GetRightButtonTrigger() - controller.GetLeftButtonTrigger());
 
+		// System.out.println("DriveTrain X = " + controller.GetX() + " | Y = " + controller.GetY());
 		// System.out.print("Arm = " + (controller.GetRightY()) + "   ");
 		// System.out.print("Lift = " + (controller.GetRightTrigger() - controller.GetLeftTrigger()) + "   ");
 		// System.out.println("Claw = " + (controller.GetRightButtonTrigger() - controller.GetLeftButtonTrigger()));
-		System.out.println("Switch = " + switchController.getRaw());
+		System.out.println("Switch = " + switchController.get());
 	}
 }

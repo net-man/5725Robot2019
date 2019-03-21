@@ -155,7 +155,9 @@ public class DriveTrain {
      */
     public void drive(double rotation, double speed) {
         rotation *= turnSpeed;
-        speed *= driveSpeed;
+        speed *= -driveSpeed;
+        if(Math.abs(rotation) < 0.1f) rotation = 0.0f;
+        if(Math.abs(speed) < 0.1f) speed = 0.0f;
 
         double right = speed + rotation;
         double left = speed - rotation;
