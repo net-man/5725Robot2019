@@ -1,7 +1,8 @@
 package frc.robot.components;
 
 import edu.wpi.first.wpilibj.*;
-import frc.robot.extra.settings.ClawSettings;
+import frc.robot.extra.settings.RobotSettings;
+import frc.utils.RobotMath;
 
 /**
  * Robot claw component. This class represents a generic claw-like structure
@@ -15,42 +16,19 @@ public class Claw {
     private Spark motor;
 
     /**
-     * The claw encoder. This is used to get the current position of the claw. From
-     * this, exact claw positions can be set based on what is needed.
-     * <p>
-     * This is optional. To disable it, set {@link ClawSettings#isEncoderEnabled} to
-     * false.
-     */
-    private Encoder encoder;
-
-    /**
-     * The claw settings for this claw. This will affect things like speed and
-     * encoder direction.
-     */
-    private ClawSettings settings;
-
-    /**
      * The robots base speed. This will affect the speed of all user-controlled
      * inputs.
      * <p>
      * Autonomous speeds are controlled seperataly.
      */
     public double speed;
-
-    /**
-     * The total amount of times the claw motor has done a full rotation.
-     */
-    public int encoderCount;
-
-    /**
-     * The amount of cm's the claw moves in one motor rotation.
-     */
-    public double distancePerRevolution;
+    public double speedOpen;
+    public double speedClose;
 
     /**
      * Initialize the claw's values.
      */
-    public Claw() { load(new ClawSettings()); }
+    public Claw() { load(); }
 
     /**
      * Loads new {@link ClawSettings} into the claw. This should be used with
@@ -59,18 +37,12 @@ public class Claw {
      * 
      * @param settings The Desired {@link ClawSettings} to load into the claw.
      */
-    public void load(ClawSettings settings) {
-        this.settings = settings;
+    public void load() {
+        speed = RobotSettings.clawSpeed;
+        speedOpen = RobotSettings.clawSpeedOpen;
+        speedClose = RobotSettings.clawSpeedClose;
 
-        speed = settings.speed;
-        distancePerRevolution = settings.distancePerRevolution;
-
-        motor = new Spark(settings.portMotor);
-
-        if (settings.isEncoderEnabled) {
-            encoder = new Encoder(settings.portEncoderA, settings.portEncoderB, settings.isEncoderReversed,
-                    Encoder.EncodingType.k4X);
-        }
+        motor = new Spark(RobotSettings.portClawMotor);
     }
     
     /**
@@ -78,7 +50,6 @@ public class Claw {
      */
     public void unload() {
         motor.close();
-        if(encoder != null) encoder.close();
     }
 
     /**
@@ -90,27 +61,16 @@ public class Claw {
      *               between 1 and -1.
      */
     public void rotate(double amount) {
-        motor.set(amount * speed);
-    }
-
-    /**
-     * Get's the claws current position. This values comes from the motor encoder
-     * value difference.
-     * <p>
-     * This means that if the direction is changed between calls of this method, the
-     * position will be off.
-     * 
-     * @return The double position of the claw in centimeters.
-     */
-    public double getPosition() {
-        if (encoderCount == 0) {
-            encoderCount = encoder.get();
-            return encoderCount;
+        if(amount > 0) {
+            amount *= speedOpen;
         }
-
-        int current = encoderCount - encoder.get();
-        encoderCount = encoder.get();
-        return current * distancePerRevolution;
+        else if(amount < 0) {
+            amount *= speedClose;
+        }
+        else {
+            amount = 0;
+        }
+        motor.set(RobotMath.Clamp(amount, -speed, speed));
     }
 
     /**

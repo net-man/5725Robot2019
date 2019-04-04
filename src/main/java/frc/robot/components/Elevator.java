@@ -1,7 +1,8 @@
 package frc.robot.components;
 
 import edu.wpi.first.wpilibj.*;
-import frc.robot.extra.settings.ElevatorSettings;
+import frc.robot.extra.settings.RobotSettings;
+import frc.utils.RobotMath;
 
 /**
  * Robot elevator component. This class represents a basic elevator with y movement
@@ -14,20 +15,8 @@ public class Elevator {
      */
     private Spark motor;
 
-    /**
-     * The elevator encoder. This is used to get the current position of the elevator. From
-     * this, exact elevator positions can be set based on what is needed.
-     * <p>
-     * This is optional. To disable it, set {@link ElevatorSettings#isEncoderEnabled} to
-     * false.
-     */
-    private Encoder encoder;
-
-    /**
-     * The elevator settings for this elevator. This will affect things like speed and
-     * encoder direction.
-     */
-    private ElevatorSettings settings;
+    private DigitalInput switchTop;
+    private DigitalInput switchBottom;
 
     /**
      * The robots base speed. This will affect the speed of all user-controlled
@@ -36,21 +25,16 @@ public class Elevator {
      * Autonomous speeds are controlled seperataly.
      */
     public double speed;
+    public double speedAscending;
+    public double speedDescending;
 
-    /**
-     * The total amount of times the elevator motor has done a full rotation.
-     */
-    public int encoderCount;
-
-    /**
-     * The amount of cm's the elevator moves in one motor rotation.
-     */
-    public double distancePerRevolution;
+    public boolean canDescend = true;
+    public boolean canAscend = true;
 
     /**
      * Initialize elevator values.
      */
-    public Elevator() { load(new ElevatorSettings()); }
+    public Elevator() { load(); }
 
     /**
      * Loads new {@link ElevatorSettings} into the elevator. This should be used with
@@ -59,17 +43,14 @@ public class Elevator {
      * 
      * @param settings The Desired {@link ElevatorSettings} to load into the elevator.
      */
-    public void load(ElevatorSettings settings) {
-        this.settings = settings;
+    public void load() {
+        speed = RobotSettings.elevatorSpeed;
+        speedAscending = RobotSettings.elevatorSpeedAscending;
+        speedDescending = RobotSettings.elevatorSpeedDescending;
 
-        speed = settings.speed;
-        distancePerRevolution = settings.distancePerRevolution;
-
-        motor = new Spark(settings.portMotor);
-
-        if (settings.isEncoderEnabled) {
-            encoder = new Encoder(settings.portEncoderA, settings.portEncoderB, settings.isEncoderReversed, Encoder.EncodingType.k4X);
-        }
+        motor = new Spark(RobotSettings.portElevatorMotor);
+        switchTop = new DigitalInput(RobotSettings.dportElevatorSwitchTop);
+        switchBottom = new DigitalInput(RobotSettings.dportElevatorSwitchBottom);
     }
 
     /**
@@ -77,7 +58,6 @@ public class Elevator {
      */
     public void unload() {
         motor.close();
-        if(encoder != null) encoder.close();
     }
 
     /**
@@ -89,27 +69,35 @@ public class Elevator {
      *               between 1 and -1.
      */
     public void lift(double amount) {
-        motor.set(amount * speed);
-    }
-
-    /**
-     * Get's the elevators current position. This values comes from the motor encoder
-     * value difference.
-     * <p>
-     * This means that if the direction is changed between calls of this method, the
-     * position will be off.
-     * 
-     * @return The double position of the elevator in centimeters.
-     */
-    public double getPosition() {
-        if (encoderCount == 0) {
-            encoderCount = encoder.get();
-            return encoderCount;
+        // Update canAscend / canDescend
+        if(switchBottom.get() == true) {
+            canDescend = false;
+        }
+        else {
+            canDescend = true;
+        }
+        if(switchTop.get() == true) {
+            canAscend = false;
+        }
+        else {
+            canAscend = true;
         }
 
-        int current = encoderCount - encoder.get();
-        encoderCount = encoder.get();
-        return current * distancePerRevolution;
+        // Lift or drop elevator
+        if(canAscend == true && amount > 0) {
+            amount *= speedAscending;
+        }
+        else if(canDescend == true && amount < 0) {
+            amount *= speedDescending;
+        }
+        else {
+            amount = 0;
+        }
+
+        System.out.println("Elevator = " + amount);
+
+        amount = RobotMath.Clamp(amount, -speed, speed);
+        motor.set(amount);
     }
 
     /**

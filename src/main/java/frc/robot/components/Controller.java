@@ -53,4 +53,16 @@ public class Controller {
     public boolean GetButtonY() {
         return joystick.getRawButton(3);
     }
+
+    public double DPad() {
+        if ((joystick.getPOV(0) >= 315 || joystick.getPOV(0) <= 45) && joystick.getPOV(0) != -1) {
+        return 1.0;
+        }
+        else if(joystick.getPOV(0) >= 135 && joystick.getPOV(0) <= 225) {
+            return -1.0;
+        }
+        else {
+             return 0;
+        }
+    }
 }

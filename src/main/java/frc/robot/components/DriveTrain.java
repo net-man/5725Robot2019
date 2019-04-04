@@ -35,30 +35,6 @@ public class DriveTrain {
     private Spark motorLeft2;
 
     /**
-     * The right drive train encoder. both encoder will be used with each other to
-     * get the robots world coordinates.
-     * <p>
-     * This is optional. To disable it, set
-     * {@link DriveTrainSettings#isEncoderEnabled} to false.
-     */
-    private Encoder encoderRight;
-
-    /**
-     * The left drive train encoder. both encoder will be used with each other to
-     * get the robots world coordinates.
-     * <p>
-     * This is optional. To disable it, set
-     * {@link DriveTrainSettings#isEncoderEnabled} to false.
-     */
-    private Encoder encoderLeft;
-
-    /**
-     * The drive train settings for this drive train. This will affect things like
-     * speed and encoder direction.
-     */
-    private DriveTrainSettings settings;
-
-    /**
      * The drive train drive speed. This will affect the speed of all
      * user-controlled inputs.
      * <p>
@@ -80,25 +56,24 @@ public class DriveTrain {
 
     public double speed;
 
-    /**
-     * The total amount of times the drive train motor has done a full rotation.
-     */
-    public int encoderCount;
+    public double rightSpeed;
+    public double leftSpeed;
 
     /**
-     * The amount of cm's the drive train moves in one motor rotation.
+     * If set to true, the drive value will be normalized as if the value was a
+     * circle of sorts.
      */
-    public double distancePerRevolution;
+    public boolean isDriveNormalized;
 
-    /**
-     * If set to true, the drive value will be normalized as if the value was a circle of sorts.
-     */
-    public boolean doNormalizeDrive;
+    public boolean isRightInversed;
+    public boolean isLeftInversed;
 
     /**
      * Initialize drive train values.
      */
-    public DriveTrain() { load(new DriveTrainSettings()); }
+    public DriveTrain() {
+        load();
+    }
 
     /**
      * Loads new {@link DriveTrainSettings} into the drive train. This should be
@@ -108,41 +83,36 @@ public class DriveTrain {
      * @param settings The Desired {@link DriveTrainSettings} to load into the drive
      *                 train.
      */
-    public void load(DriveTrainSettings settings) {
-        this.settings = settings;
-        
-        // TODO: Add global max speed to the rest of the components.
-        speed = settings.speed;
-        driveSpeed = settings.driveSpeed;
-        turnSpeed = settings.turnSpeed;
-        distancePerRevolution = settings.distancePerRevolution;
+    public void load() {
+        speed = RobotSettings.driveTrainSpeed;
+        driveSpeed = RobotSettings.driveTrainDriveSpeed;
+        turnSpeed = RobotSettings.driveTrainTurnSpeed;
 
-        doNormalizeDrive = settings.doNormalizeDrive;
-        
-        motorRight1 = new Spark(settings.portMotorRight1);
-        motorRight2 = new Spark(settings.portMotorRight2);
-        motorLeft1 = new Spark(settings.portMotorLeft1);
-        motorLeft2 = new Spark(settings.portMotorLeft2);
+        rightSpeed = RobotSettings.driveTrainRightSpeed;
+        leftSpeed = RobotSettings.driveTrainLeftSpeed;
 
-        if (settings.isEncoderEnabled) {
-            encoderRight = new Encoder(settings.portEncoderRightA, settings.portEncoderRightB,
-                    settings.isEncoderReversed, Encoder.EncodingType.k4X);
-            encoderLeft = new Encoder(settings.portEncoderLeftA, settings.portEncoderLeftB, settings.isEncoderReversed,
-                    Encoder.EncodingType.k4X);
-        }
+        isDriveNormalized = RobotSettings.driveTrainIsDriveNormalized;
+
+        motorRight1 = new Spark(RobotSettings.portDriveTrainMotorRight1);
+        motorRight2 = new Spark(RobotSettings.portDriveTrainMotorRight2);
+        motorLeft1 = new Spark(RobotSettings.portDriveTrainMotorLeft1);
+        motorLeft2 = new Spark(RobotSettings.portDriveTrainMotorLeft2);
+
+        motorRight1.setInverted(isRightInversed);
+        motorRight2.setInverted(isRightInversed);
+        motorLeft1.setInverted(isLeftInversed);
+        motorLeft2.setInverted(isLeftInversed);
     }
 
     /**
-     * Frees all ports that were being used along with unloading / reseting anything else that requires it.
+     * Frees all ports that were being used along with unloading / reseting anything
+     * else that requires it.
      */
     public void unload() {
         motorRight1.close();
         motorRight2.close();
         motorLeft1.close();
         motorLeft2.close();
-
-        if(encoderRight != null) encoderRight.close();
-        if(encoderLeft != null) encoderLeft.close();
     }
 
     /**
@@ -156,22 +126,25 @@ public class DriveTrain {
     public void drive(double rotation, double speed) {
         rotation *= turnSpeed;
         speed *= -driveSpeed;
-        if(Math.abs(rotation) < 0.1f) rotation = 0.0f;
-        if(Math.abs(speed) < 0.1f) speed = 0.0f;
+        // if(Math.abs(rotation) < 0.1f) rotation = 0.0f;
+        // if(Math.abs(speed) < 0.1f) speed = 0.0f;
+
+        if (isDriveNormalized == true) {
+            double magnitude = Math.sqrt(speed * speed + rotation * rotation);
+            if (speed != 0) {
+                speed = speed / magnitude;
+            }
+            if (rotation != 0) {
+                rotation = rotation / magnitude;
+            }
+
+            System.out.println("Speed = " + speed + " ( " + "magnitude( " + magnitude + " ) " + " | " + "Rotation = " + rotation);
+        }
 
         double right = speed + rotation;
         double left = speed - rotation;
 
-        if(doNormalizeDrive == true) {
-            double magnitude = Math.sqrt(right * right + left * left);
-            right = right / magnitude;
-            left = left / magnitude;
-        }
-
         driveTank(right, left);
-
-        // System.out.println("Right Speed : " + right);
-        // System.out.println("Left Speed  : " + left);
     }
 
     /**
@@ -185,10 +158,9 @@ public class DriveTrain {
      *              1.
      */
     public void driveTank(double right, double left) {
-        right = RobotMath.Clamp(right, -speed, speed);
-        left = RobotMath.Clamp(left, -speed, speed);
+        right = RobotMath.Clamp(right, -speed, speed) * rightSpeed;
+        left = RobotMath.Clamp(left, -speed, speed) * leftSpeed;
 
-        // TODO: Make inverse motor rotation another setting in DriveTrainSettings
         motorRight1.set(right);
         motorRight2.set(right);
         motorLeft1.set(-left);

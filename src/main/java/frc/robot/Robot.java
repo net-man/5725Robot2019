@@ -2,9 +2,12 @@ package frc.robot;
 
 import frc.robot.autonomous.CommandQueue;
 import frc.robot.components.*;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 	public static DriveTrain driveTrain = new DriveTrain();
@@ -19,6 +22,15 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		System.out.println("****** Robot Code Initializing ******");
+		CameraServer.getInstance().startAutomaticCapture();
+
+		// driveTrain.drive(1, 1);
+		// driveTrain.drive(-1, 1);
+		// driveTrain.drive(1, -1);
+		// driveTrain.drive(0, 0);
+		// driveTrain.drive(-1, -1);
+		// driveTrain.drive(0.5, 1);
+		// edu.wpi.first.wpilibj.CameraServer.getInstance().startAutomaticCapture();
 
 		// driveTrain.unload();
 		// elevator.unload();
@@ -36,9 +48,10 @@ public class Robot extends TimedRobot {
 		// arm.load(settings.arm);
 		// claw.load(settings.claw);
 
-		System.out.println("Elevator Speed: " + elevator.speed);
+		// System.out.println("Elevator Speed: " + elevator.speed);
+		// System.out.println("Arm Speed: " + arm.speed);
 	}
-
+ 
 	@Override
 	public void robotPeriodic() {
 		// Robot periodic is a bit strange in that it constantly runs throughout the
@@ -74,6 +87,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		commandQueue.Periodic();
+		
+		driveTrain.drive(controller.GetX(), controller.GetY());
+		claw.rotate(controller.GetRightTrigger() - controller.GetLeftTrigger());
+		arm.rotate(controller.GetRightY());
+		elevator.lift(controller.DPad());
 	}
 
 	// Teleop Code...
@@ -86,6 +104,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		driveTrain.drive(controller.GetX(), controller.GetY());
+		claw.rotate(controller.GetRightTrigger() - controller.GetLeftTrigger());
+		arm.rotate(controller.GetRightY());
+		elevator.lift(controller.DPad());
+
+		System.out.println("Can Ascend = " + elevator.canAscend);
+		System.out.println("Can Decend = " + elevator.canDescend);
 	}
 
 	// Disabled code...
@@ -106,8 +130,6 @@ public class Robot extends TimedRobot {
 		System.out.println("****** Robot Test Code Initializing ******");
 	}
 
-	public static DigitalInput switchController = new DigitalInput(1);
-
 	@Override
 	public void testPeriodic() {
 		driveTrain.drive(controller.GetX(), controller.GetY());
@@ -120,6 +142,6 @@ public class Robot extends TimedRobot {
 		// System.out.print("Arm = " + (controller.GetRightY()) + "   ");
 		// System.out.print("Lift = " + (controller.GetRightTrigger() - controller.GetLeftTrigger()) + "   ");
 		// System.out.println("Claw = " + (controller.GetRightButtonTrigger() - controller.GetLeftButtonTrigger()));
-		System.out.println("Switch = " + switchController.get());
+		// System.out.println("Switch = " + switchController.get());
 	}
 }

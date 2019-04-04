@@ -20,7 +20,8 @@ public class ClawSetPositionCommand extends Command {
 
     @Override
     public void periodic() {
-        double clawPosition = Robot.claw.getPosition();
+        // double clawPosition = Robot.claw.getPosition();
+        double clawPosition = 0;
         if(Math.hypot(clawPosition, position) <= error) isFinished = true;
         else {
             Robot.claw.rotate(RobotMath.Direction(clawPosition, position) * speed);

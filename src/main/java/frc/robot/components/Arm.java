@@ -1,7 +1,8 @@
 package frc.robot.components;
 
 import edu.wpi.first.wpilibj.*;
-import frc.robot.extra.settings.ArmSettings;
+import frc.robot.extra.settings.RobotSettings;
+import frc.utils.RobotMath;
 
 /**
  * Robot elevator component. This class represents a basic arm with z
@@ -15,43 +16,19 @@ public class Arm {
     private Spark motor;
 
     /**
-     * The arm encoder. This is used to get the current position of the
-     * arm. From this, exact arm positions can be set based on what is
-     * needed.
-     * <p>
-     * This is optional. To disable it, set
-     * {@link ElevatorSettings#isEncoderEnabled} to false.
-     */
-    private Encoder encoder;
-
-    /**
-     * The arm settings for this arm. This will affect things like speed
-     * and encoder direction.
-     */
-    private ArmSettings settings;
-
-    /**
      * The robots base speed. This will affect the speed of all user-controlled
      * inputs.
      * <p>
      * Autonomous speeds are controlled seperataly.
      */
     public double speed;
-
-    /**
-     * The total amount of times the arm motor has done a full rotation.
-     */
-    public int encoderCount;
-
-    /**
-     * The amount of cm's the arm moves in one motor rotation.
-     */
-    public double distancePerRevolution;
+    public double speedUp;
+    public double speedDown;
 
     /**
      * Initialize arm values.
      */
-    public Arm() { load(new ArmSettings()); }
+    public Arm() { load(); }
 
     /**
      * Loads new {@link ArmSettings} into the arm. This should be used
@@ -61,18 +38,12 @@ public class Arm {
      * @param settings The Desired {@link ArmSettings} to load into the
      *                 arm.
      */
-    public void load(ArmSettings settings) {
-        this.settings = settings;
+    public void load() {
+        speed = RobotSettings.armSpeed;
+        speedUp = RobotSettings.armSpeedUpRotation;
+        speedDown = RobotSettings.armSpeedDownRotation;
 
-        speed = settings.speed;
-        distancePerRevolution = settings.distancePerRevolution;
-
-        motor = new Spark(settings.portMotor);
-
-        if (settings.isEncoderEnabled) {
-            encoder = new Encoder(settings.portEncoderA, settings.portEncoderB, settings.isEncoderReversed,
-                    Encoder.EncodingType.k4X);
-        }
+        motor = new Spark(RobotSettings.portArmMotor);
     }
 
     /**
@@ -80,7 +51,6 @@ public class Arm {
      */
     public void unload() {
         motor.close();
-        if(encoder != null) encoder.close();
     }
 
     /**
@@ -92,27 +62,21 @@ public class Arm {
      *               between 1 and -1.
      */
     public void rotate(double amount) {
-        motor.set(amount * speed);
-    }
-
-    /**
-     * Get's the arm current position. This values comes from the motor
-     * encoder value difference.
-     * <p>
-     * This means that if the direction is changed between calls of this method, the
-     * position will be off.
-     * 
-     * @return The double position of the arm in centimeters.
-     */
-    public double getPosition() {
-        if (encoderCount == 0) {
-            encoderCount = encoder.get();
-            return encoderCount;
+        // Lift or drop elevator
+        if(amount > 0) {
+            amount *= speedUp;
+        }
+        else if(amount < 0) {
+            amount *= speedDown;
+        }
+        else {
+            amount = 0;
         }
 
-        int current = encoderCount - encoder.get();
-        encoderCount = encoder.get();
-        return current * distancePerRevolution;
+        System.out.println("Elevator = " + amount);
+
+        amount = RobotMath.Clamp(amount, -speed, speed);
+        motor.set(amount);
     }
 
     /**
