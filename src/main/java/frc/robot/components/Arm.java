@@ -9,6 +9,8 @@ import frc.utils.RobotMath;
  * rotation up and down.
  */
 public class Arm {
+    public enum Holding { NOTHING, BALL, HATCH }
+
     /**
      * The arm motor. the motors rotation will determine how rotated arm is
      * positioned.
@@ -22,8 +24,18 @@ public class Arm {
      * Autonomous speeds are controlled seperataly.
      */
     public double speed;
+
+    public double speedBall;
+    public double speedHatch;
+
     public double speedUp;
     public double speedDown;
+
+    public double[] snapValues;
+
+    public Holding holding;
+    public boolean isArmSquared;
+    public boolean isArmSnapped;
 
     /**
      * Initialize arm values.
@@ -40,6 +52,14 @@ public class Arm {
      */
     public void load() {
         speed = RobotSettings.armSpeed;
+
+        speedBall = RobotSettings.armSpeedBall;
+        speedHatch = RobotSettings.armSpeedHatch;
+
+        isArmSnapped = RobotSettings.armIsArmSnapped;
+        isArmSquared = RobotSettings.armIsArmSquared;
+        snapValues = RobotSettings.armSnapValues;
+        
         speedUp = RobotSettings.armSpeedUpRotation;
         speedDown = RobotSettings.armSpeedDownRotation;
 
@@ -62,20 +82,39 @@ public class Arm {
      *               between 1 and -1.
      */
     public void rotate(double amount) {
+        System.out.println(amount);
+
+        if(isArmSquared == true) {
+            double temp = amount*amount;
+            if(amount < 0) amount = -temp;
+            else amount = temp;
+        }
+        
         // Lift or drop elevator
-        if(amount > 0) {
+        if(amount < 0) {
             amount *= speedUp;
         }
-        else if(amount < 0) {
+        else if(amount > 0) {
             amount *= speedDown;
         }
         else {
             amount = 0;
         }
+        
+        double clamp = speed;
 
-        System.out.println("Elevator = " + amount);
+        if(holding == Holding.BALL) {
+            clamp = speedBall;
+        }
+        else if(holding == Holding.HATCH) {
+            clamp = speedHatch;
+        }
 
-        amount = RobotMath.Clamp(amount, -speed, speed);
+        // if(isArmSnapped == true) {
+        //     amount = RobotMath.Snap(amount, snapValues, 0.3);
+        // }
+
+        amount = RobotMath.Clamp(amount, -clamp, clamp);
         motor.set(amount);
     }
 

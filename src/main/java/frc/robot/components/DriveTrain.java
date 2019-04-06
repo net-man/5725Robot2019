@@ -63,7 +63,11 @@ public class DriveTrain {
      * If set to true, the drive value will be normalized as if the value was a
      * circle of sorts.
      */
-    public boolean isDriveNormalized;
+    public boolean isDriveSquared;
+    public boolean isDriveSnapped;
+
+    public double[] snapValuesX;
+    public double[] snapValuesY;
 
     public boolean isRightInversed;
     public boolean isLeftInversed;
@@ -91,7 +95,11 @@ public class DriveTrain {
         rightSpeed = RobotSettings.driveTrainRightSpeed;
         leftSpeed = RobotSettings.driveTrainLeftSpeed;
 
-        isDriveNormalized = RobotSettings.driveTrainIsDriveNormalized;
+        isDriveSquared = RobotSettings.driveTrainIsDriveSquared;
+        isDriveSnapped = RobotSettings.driveTrainIsDriveSnapped;
+
+        snapValuesX = RobotSettings.driveTrainSnapValuesX;
+        snapValuesY = RobotSettings.driveTrainSnapValuesY;
 
         motorRight1 = new Spark(RobotSettings.portDriveTrainMotorRight1);
         motorRight2 = new Spark(RobotSettings.portDriveTrainMotorRight2);
@@ -126,20 +134,27 @@ public class DriveTrain {
     public void drive(double rotation, double speed) {
         rotation *= turnSpeed;
         speed *= -driveSpeed;
-        // if(Math.abs(rotation) < 0.1f) rotation = 0.0f;
-        // if(Math.abs(speed) < 0.1f) speed = 0.0f;
+        if(Math.abs(rotation) < 0.08) rotation = 0.0f;
+        if(Math.abs(speed) < 0.08) speed = 0.0f;
 
-        if (isDriveNormalized == true) {
-            double magnitude = Math.sqrt(speed * speed + rotation * rotation);
-            if (speed != 0) {
-                speed = speed / magnitude;
-            }
-            if (rotation != 0) {
-                rotation = rotation / magnitude;
-            }
+        if (isDriveSquared == true) {
+            // If is squared set to true, square speed and rotation.
+            // Figures out negative if lossed in calculation.
+            double temp = speed*speed;
+            speed = speed < 0 ? -temp : temp;
 
-            System.out.println("Speed = " + speed + " ( " + "magnitude( " + magnitude + " ) " + " | " + "Rotation = " + rotation);
+            temp = rotation*rotation;
+            rotation = rotation < 0 ? -temp : temp;
         }
+
+        // System.out.print("Speed = " + speed + " | " + "Rotation = " + rotation + "  >>> ");
+
+        if(isDriveSnapped == true) {
+            speed = RobotMath.Snap(speed, snapValuesY, 0.1);
+            rotation = RobotMath.Snap(rotation, snapValuesX, 0.1);
+        }
+
+        // System.out.println("Speed = " + speed + " | " + "Rotation = " + rotation);
 
         double right = speed + rotation;
         double left = speed - rotation;

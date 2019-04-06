@@ -2,12 +2,11 @@ package frc.robot;
 
 import frc.robot.autonomous.CommandQueue;
 import frc.robot.components.*;
+
+import java.util.Random;
+
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 	public static DriveTrain driveTrain = new DriveTrain();
@@ -23,15 +22,6 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		System.out.println("****** Robot Code Initializing ******");
 		CameraServer.getInstance().startAutomaticCapture();
-
-		// driveTrain.drive(1, 1);
-		// driveTrain.drive(-1, 1);
-		// driveTrain.drive(1, -1);
-		// driveTrain.drive(0, 0);
-		// driveTrain.drive(-1, -1);
-		// driveTrain.drive(0.5, 1);
-		// edu.wpi.first.wpilibj.CameraServer.getInstance().startAutomaticCapture();
-
 		// driveTrain.unload();
 		// elevator.unload();
 		// arm.unload();
@@ -103,13 +93,32 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
+		// Drive Train Logic
+		// driveTrain.isDriveNormalized = controller.GetButtonA() ? true : false;
+
 		driveTrain.drive(controller.GetX(), controller.GetY());
-		claw.rotate(controller.GetRightTrigger() - controller.GetLeftTrigger());
-		arm.rotate(controller.GetRightY());
+		
+		// ELevator Logic
 		elevator.lift(controller.DPad());
 
-		System.out.println("Can Ascend = " + elevator.canAscend);
-		System.out.println("Can Decend = " + elevator.canDescend);
+		// Arm Logic
+		if(controller.GetButtonX()) {
+			arm.holding = Arm.Holding.BALL;
+		}
+		else if(controller.GetButtonY()) {
+			arm.holding = Arm.Holding.HATCH;
+		}
+		else if(controller.GetButtonB()) {
+			arm.holding = Arm.Holding.NOTHING;
+		}
+
+		arm.rotate(controller.GetRightY());
+
+		// Claw Logic
+		claw.rotate(controller.GetRightTrigger() - controller.GetLeftTrigger());
+
+		// System.out.println("Can Ascend = " + elevator.canAscend);
+		// System.out.println("Can Decend = " + elevator.canDescend);
 	}
 
 	// Disabled code...
@@ -119,8 +128,11 @@ public class Robot extends TimedRobot {
 		System.out.println("****** Robot Disabled Code Initializing ******");
 	}
 
+	Random r = new Random(1342);
+
 	@Override
 	public void disabledPeriodic() {
+		driveTrain.drive((r.nextDouble()-0.5)*2, (r.nextDouble()-0.5)*2);
 	}
 
 	// Test code...
@@ -133,7 +145,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 		driveTrain.drive(controller.GetX(), controller.GetY());
-		// driveTrain.driveTank(controller.GetX(), -controller.GetX());
 		elevator.lift(controller.GetRightTrigger() - controller.GetLeftTrigger());
 		arm.rotate(-controller.GetRightY());
 		claw.rotate(controller.GetRightButtonTrigger() - controller.GetLeftButtonTrigger());

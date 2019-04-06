@@ -25,6 +25,11 @@ public class Claw {
     public double speedOpen;
     public double speedClose;
 
+    public double SpeedConstantClampForce;
+
+    public boolean isConstantClampEnabled = false;
+    public boolean isClampping = false;
+
     /**
      * Initialize the claw's values.
      */
@@ -41,6 +46,9 @@ public class Claw {
         speed = RobotSettings.clawSpeed;
         speedOpen = RobotSettings.clawSpeedOpen;
         speedClose = RobotSettings.clawSpeedClose;
+
+        SpeedConstantClampForce = RobotSettings.clawSpeedConstantClampForce;
+        isConstantClampEnabled = RobotSettings.clawIsConstantClampForceEnabled;
 
         motor = new Spark(RobotSettings.portClawMotor);
     }
@@ -63,12 +71,24 @@ public class Claw {
     public void rotate(double amount) {
         if(amount > 0) {
             amount *= speedOpen;
+
+            // if(isConstantClampEnabled) {
+            //     isClampping = true;
+            // }
         }
         else if(amount < 0) {
             amount *= speedClose;
+
+            // if(isConstantClampEnabled) {
+            //     isClampping = false;
+            // }
         }
         else {
             amount = 0;
+
+            // if(isConstantClampEnabled) {
+            //     amount = SpeedConstantClampForce;
+            // }
         }
         motor.set(RobotMath.Clamp(amount, -speed, speed));
     }

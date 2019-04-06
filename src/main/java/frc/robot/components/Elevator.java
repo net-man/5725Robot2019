@@ -45,6 +45,7 @@ public class Elevator {
      */
     public void load() {
         speed = RobotSettings.elevatorSpeed;
+        
         speedAscending = RobotSettings.elevatorSpeedAscending;
         speedDescending = RobotSettings.elevatorSpeedDescending;
 
@@ -70,18 +71,7 @@ public class Elevator {
      */
     public void lift(double amount) {
         // Update canAscend / canDescend
-        if(switchBottom.get() == true) {
-            canDescend = false;
-        }
-        else {
-            canDescend = true;
-        }
-        if(switchTop.get() == true) {
-            canAscend = false;
-        }
-        else {
-            canAscend = true;
-        }
+        canAscend = ! switchTop.get();
 
         // Lift or drop elevator
         if(canAscend == true && amount > 0) {
@@ -94,7 +84,9 @@ public class Elevator {
             amount = 0;
         }
 
-        System.out.println("Elevator = " + amount);
+        // System.out.println("Elevator = " + amount);
+        // System.out.println("Elevator Can Ascend = " + canAscend);
+        // System.out.println("Elevator Can Descend = " + canDescend);
 
         amount = RobotMath.Clamp(amount, -speed, speed);
         motor.set(amount);
