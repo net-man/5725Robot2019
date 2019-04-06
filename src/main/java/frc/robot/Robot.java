@@ -128,11 +128,8 @@ public class Robot extends TimedRobot {
 		System.out.println("****** Robot Disabled Code Initializing ******");
 	}
 
-	Random r = new Random(1342);
-
 	@Override
 	public void disabledPeriodic() {
-		driveTrain.drive((r.nextDouble()-0.5)*2, (r.nextDouble()-0.5)*2);
 	}
 
 	// Test code...
